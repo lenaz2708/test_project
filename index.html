@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Моя кухня</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, sans-serif; background: #f5f5f0; color: #333; }
+    header { background: #e8845a; color: white; padding: 20px; text-align: center; }
+    header h1 { font-size: 24px; }
+    header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+    nav { display: flex; background: white; border-bottom: 1px solid #eee; overflow-x: auto; }
+    nav button { flex: 1; min-width: 80px; padding: 12px 8px; border: none; background: none; font-size: 13px; cursor: pointer; color: #666; }
+    nav button.active { color: #e8845a; border-bottom: 2px solid #e8845a; font-weight: 600; }
+    .tab { display: none; padding: 16px; }
+    .tab.active { display: block; }
+    h2 { font-size: 16px; color: #e8845a; margin: 16px 0 8px; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    th { background: #f9f9f9; font-size: 12px; color: #888; padding: 8px 12px; text-align: left; }
+    td { padding: 10px 12px; font-size: 14px; border-top: 1px solid #f0f0f0; }
+    .badge { display: inline-block; background: #e8f5e9; color: #4caf50; border-radius: 4px; padding: 2px 6px; font-size: 12px; }
+    .card { background: white; border-radius: 8px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .card h3 { font-size: 15px; margin-bottom: 6px; }
+    .card p { font-size: 13px; color: #666; line-height: 1.5; }
+    .tag { display: inline-block; background: #fff3e0; color: #e8845a; border-radius: 4px; padding: 2px 8px; font-size: 12px; margin: 2px; }
+    .updated { font-size: 12px; color: #aaa; margin-bottom: 12px; }
+    .hint { background: #fff8f5; border-left: 3px solid #e8845a; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; color: #666; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🍳 Моя кухня</h1>
+  <p>Лена · семья 3 человека</p>
+</header>
+
+<nav>
+  <button class="active" onclick="show('zapasy')">Запасы</button>
+  <button onclick="show('morozilka')">Морозилка</button>
+  <button onclick="show('recepty')">Рецепты</button>
+  <button onclick="show('plan')">План</button>
+</nav>
+
+<!-- ЗАПАСЫ -->
+<div id="zapasy" class="tab active">
+  <p class="updated">Обновлено: 15 марта 2026</p>
+  <div class="hint">Чтобы обновить запасы — скажи Клоду что изменилось, он сам поправит файл и сделает git push.</div>
+
+  <h2>Холодильник</h2>
+  <table>
+    <tr><th>Продукт</th><th>Количество</th></tr>
+    <tr><td>Протеиновый йогурт</td><td><span class="badge">3 шт</span></td></tr>
+    <tr><td>Коттедж 3%</td><td><span class="badge">1.5 банки</span></td></tr>
+    <tr><td>Творог</td><td><span class="badge">2 × 500 г</span></td></tr>
+    <tr><td>Яйца крупные</td><td><span class="badge">17 шт</span></td></tr>
+    <tr><td>Моцарелла тёртая</td><td><span class="badge">200 г</span></td></tr>
+    <tr><td>Масло сливочное</td><td><span class="badge">2 × 200 г</span></td></tr>
+    <tr><td>Свёкла варёная</td><td><span class="badge">500 г</span></td></tr>
+    <tr><td>Тофу</td><td><span class="badge">300 г</span></td></tr>
+    <tr><td>Кинза свежая</td><td><span class="badge">1 пучок</span></td></tr>
+  </table>
+
+  <h2>Овощи / фрукты</h2>
+  <table>
+    <tr><th>Продукт</th><th>Количество</th></tr>
+    <tr><td>Батат</td><td><span class="badge">2 шт</span></td></tr>
+    <tr><td>Морковь</td><td><span class="badge">3.5 кг</span></td></tr>
+    <tr><td>Лук</td><td><span class="badge">2 шт</span></td></tr>
+    <tr><td>Чеснок</td><td><span class="badge">4 головки</span></td></tr>
+    <tr><td>Баклажаны</td><td><span class="badge">3 шт</span></td></tr>
+    <tr><td>Красный перец</td><td><span class="badge">3 шт</span></td></tr>
+    <tr><td>Капуста</td><td><span class="badge">1 кочан</span></td></tr>
+    <tr><td>Кольраби</td><td><span class="badge">2 шт</span></td></tr>
+  </table>
+
+  <h2>Консервы / сухое</h2>
+  <table>
+    <tr><th>Продукт</th><th>Количество</th></tr>
+    <tr><td>Тунец</td><td><span class="badge">4 банки</span></td></tr>
+    <tr><td>Хумус</td><td><span class="badge">560 г</span></td></tr>
+    <tr><td>Рис басмати</td><td><span class="badge">1 кг</span></td></tr>
+    <tr><td>Красная чечевица</td><td><span class="badge">700 г</span></td></tr>
+    <tr><td>Белая фасоль</td><td><span class="badge">500 г</span></td></tr>
+    <tr><td>Манка</td><td><span class="badge">500 г</span></td></tr>
+    <tr><td>Овсянка</td><td><span class="badge">500 г</span></td></tr>
+  </table>
+</div>
+
+<!-- МОРОЗИЛКА -->
+<div id="morozilka" class="tab">
+  <div class="hint">Заполни файл заморозка_готовое.md — и я обновлю эту страницу.</div>
+  <div class="card">
+    <h3>Готовые блюда</h3>
+    <p>Пока пусто — добавь первые блюда после готовки!</p>
+  </div>
+
+  <h2>Что хорошо замораживается</h2>
+  <div class="card">
+    <span class="tag">✅ Мясные шарики</span>
+    <span class="tag">✅ Куриная печень</span>
+    <span class="tag">✅ Лосось в рагу</span>
+    <span class="tag">✅ Запечённые овощи</span>
+    <span class="tag">✅ Куриное филе</span>
+    <span class="tag">✅ Заливной пирог</span>
+    <span class="tag">✅ Маффины</span>
+    <span class="tag">❌ Панкейки</span>
+    <span class="tag">❌ Картошка в блюдах</span>
+  </div>
+</div>
+
+<!-- РЕЦЕПТЫ -->
+<div id="recepty" class="tab">
+  <div class="card">
+    <h3>🥞 Панкейки на йогурте</h3>
+    <p>Йогурт 250г · 1 яйцо · мука 7 ст.л. · разрыхлитель 1 ч.л.<br>Средний огонь, под крышкой. Переворачивать когда верх матовый.</p>
+    <span class="tag">✅ Проверено</span>
+  </div>
+  <div class="card">
+    <h3>🥞 Панкейки на коттедже</h3>
+    <p>Коттедж 250г · 2 яйца · мука 3 ст.л. · разрыхлитель 0.5 ч.л.<br>Больше белка чем на йогурте.</p>
+    <span class="tag">✅ Проверено</span>
+  </div>
+  <div class="card">
+    <h3>🍖 Мясные шарики в духовке</h3>
+    <p>Фарш 700г · яйцо · лук · чеснок<br>200°C · 22–25 минут. Можно заморозить сырыми или готовыми.</p>
+    <span class="tag">✅ Проверено</span> <span class="tag">❄️ Морозилка</span>
+  </div>
+  <div class="card">
+    <h3>🍗 Куриное филе в аэрогриле</h3>
+    <p>205°C · целым куском 16–20 мин · нарезанным 10–14 мин</p>
+    <span class="tag">❄️ Морозилка</span>
+  </div>
+  <div class="card">
+    <h3>🍗 Куриная печень с луком</h3>
+    <p>Лук до золотистости → печень на сильный огонь 7–10 мин.<br>Соль только в конце!</p>
+    <span class="tag">❄️ Морозилка</span>
+  </div>
+  <div class="card">
+    <h3>🐟 Лосось в духовке</h3>
+    <p>3 варианта: с овощами на противне / в сливочном соусе / томатное рагу</p>
+    <span class="tag">❄️ Морозилка</span>
+  </div>
+  <div class="card">
+    <h3>🥦 Запечённые овощи с кинзой</h3>
+    <p>Любые овощи крупными кубиками · масло · 200°C · 30–40 мин<br>Кинзу добавить после запекания.</p>
+    <span class="tag">❄️ Морозилка</span>
+  </div>
+  <div class="card">
+    <h3>🍄 Заливной пирог с грибами</h3>
+    <p>Тесто: йогурт 200г + 2 яйца + мука 1 стакан + разрыхлитель<br>Начинка: грибы + лук + коттедж · 180°C · 35–40 мин</p>
+  </div>
+</div>
+
+<!-- ПЛАН -->
+<div id="plan" class="tab">
+  <div class="hint">Напиши Клоду "составь план на неделю" — он заполнит этот раздел на основе твоих запасов.</div>
+  <div class="card">
+    <h3>Готовка 1</h3>
+    <p>—</p>
+  </div>
+  <div class="card">
+    <h3>Готовка 2</h3>
+    <p>—</p>
+  </div>
+  <div class="card">
+    <h3>Готовка 3</h3>
+    <p>—</p>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
