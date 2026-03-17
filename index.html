@@ -1,182 +1,885 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Моя кухня</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, sans-serif; background: #f5f5f0; color: #333; }
-    header { background: #e8845a; color: white; padding: 20px; text-align: center; }
-    header h1 { font-size: 24px; }
-    header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
-    nav { display: flex; background: white; border-bottom: 1px solid #eee; overflow-x: auto; }
-    nav button { flex: 1; min-width: 80px; padding: 12px 8px; border: none; background: none; font-size: 13px; cursor: pointer; color: #666; }
-    nav button.active { color: #e8845a; border-bottom: 2px solid #e8845a; font-weight: 600; }
-    .tab { display: none; padding: 16px; }
-    .tab.active { display: block; }
-    h2 { font-size: 16px; color: #e8845a; margin: 16px 0 8px; }
-    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-    th { background: #f9f9f9; font-size: 12px; color: #888; padding: 8px 12px; text-align: left; }
-    td { padding: 10px 12px; font-size: 14px; border-top: 1px solid #f0f0f0; }
-    .badge { display: inline-block; background: #e8f5e9; color: #4caf50; border-radius: 4px; padding: 2px 6px; font-size: 12px; }
-    .card { background: white; border-radius: 8px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-    .card h3 { font-size: 15px; margin-bottom: 6px; }
-    .card p { font-size: 13px; color: #666; line-height: 1.5; }
-    .tag { display: inline-block; background: #fff3e0; color: #e8845a; border-radius: 4px; padding: 2px 8px; font-size: 12px; margin: 2px; }
-    .updated { font-size: 12px; color: #aaa; margin-bottom: 12px; }
-    .hint { background: #fff8f5; border-left: 3px solid #e8845a; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; color: #666; margin-bottom: 16px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🥕 Моя кухня</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap');
+
+:root {
+  --ink: #1a1510;
+  --paper: #f7f3ec;
+  --card: #ffffff;
+  --accent: #b85c2c;
+  --accent2: #4a7c59;
+  --muted: #9b8e7e;
+  --border: #e8e0d4;
+  --warm: #f0e8d8;
+  --shadow: 0 4px 24px rgba(26,21,16,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── GRAIN TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.4;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 2.5rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.logo em {
+  font-style: italic;
+  color: #c4855a;
+}
+
+.logo-sub {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #9b8e7e;
+  margin-top: 0.3rem;
+  font-weight: 400;
+}
+
+nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  padding: 0.5rem 1.1rem;
+  border-radius: 100px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.05em;
+}
+
+.nav-btn:hover, .nav-btn.active {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* ── LAYOUT ── */
+main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+/* ── TABS ── */
+.tab { display: none; }
+.tab.active { display: block; animation: fadeUp 0.35s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SETUP CARD ── */
+.setup-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.setup-card h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.setup-card p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.field { margin-bottom: 1rem; }
+
+.field label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.field input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  background: var(--warm);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.field input:focus {
+  border-color: var(--accent);
+  background: white;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 12px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 0.5rem;
+}
+
+.btn-primary:hover { background: #2d261c; }
+.btn-primary:active { transform: scale(0.98); }
+.btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+
+.btn-accent {
+  background: var(--accent2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1.8rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.03em;
+}
+
+.btn-accent:hover { background: #3a6347; }
+.btn-accent:active { transform: scale(0.97); }
+.btn-accent:disabled { background: #aaa; cursor: not-allowed; }
+
+.status {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.83rem;
+  display: none;
+  line-height: 1.4;
+}
+
+.status.info    { background: #e8f0fe; color: #1a56db; display: block; }
+.status.error   { background: #fde8e8; color: #c81e1e; display: block; }
+.status.success { background: #e8f5e9; color: #2e7d32; display: block; }
+
+/* ── SECTION HEADER ── */
+.section-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-hd h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+/* ── FILES ROW ── */
+.files-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.file-tag {
+  background: var(--warm);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ── INVENTORY TABLE ── */
+.inv-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+table { width: 100%; border-collapse: collapse; }
+
+thead tr { background: var(--ink); }
+
+th {
+  color: var(--paper);
+  padding: 0.85rem 1.2rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 0.75rem 1.2rem;
+  font-size: 0.88rem;
+  border-bottom: 1px solid var(--border);
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--warm); transition: background 0.15s; }
+
+td:first-child { font-weight: 500; }
+
+.tag {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  background: var(--warm);
+  color: var(--muted);
+}
+
+/* ── WEEK GRID ── */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.day-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.day-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(26,21,16,0.12);
+}
+
+.day-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.meal { margin-bottom: 0.6rem; display: flex; gap: 0.7rem; align-items: baseline; }
+
+.meal-lbl {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 62px;
+  flex-shrink: 0;
+}
+
+.meal-txt { font-size: 0.86rem; line-height: 1.4; color: var(--ink); }
+
+/* ── SHOPPING LIST ── */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.2rem;
+}
+
+.shop-cat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.shop-cat-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent2);
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  user-select: none;
+}
+
+.shop-item:last-child { border-bottom: none; }
+
+.shop-item.checked { opacity: 0.4; text-decoration: line-through; }
+
+.check-box {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  transition: all 0.15s;
+}
+
+.shop-item.checked .check-box {
+  background: var(--accent2);
+  border-color: var(--accent2);
+  color: white;
+}
+
+/* ── EMPTY / LOADING ── */
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--muted);
+}
+
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+.empty h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 0.5rem; }
+.empty p { font-size: 0.85rem; line-height: 1.6; }
+
+.spinner {
+  display: inline-block;
+  width: 20px; height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.regen-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.75rem 1.4rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.toast.show { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 600px) {
+  header { padding: 1.5rem; }
+  .logo { font-size: 2rem; }
+  main { padding: 1.5rem 1rem 3rem; }
+  .setup-card { padding: 1.5rem; }
+}
+</style>
 </head>
 <body>
 
 <header>
-  <h1>🍳 Моя кухня</h1>
-  <p>Лена · семья 3 человека</p>
+  <div>
+    <div class="logo">Моя <em>кухня</em></div>
+    <div class="logo-sub">умный планировщик питания</div>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="showTab('setup')">⚙ Настройки</button>
+    <button class="nav-btn" onclick="showTab('inventory')" id="nav-inventory">📦 Запасы</button>
+    <button class="nav-btn" onclick="showTab('plan')" id="nav-plan">📅 План</button>
+    <button class="nav-btn" onclick="showTab('shop')" id="nav-shop">🛒 Покупки</button>
+  </nav>
 </header>
 
-<nav>
-  <button class="active" onclick="show('zapasy')">Запасы</button>
-  <button onclick="show('morozilka')">Морозилка</button>
-  <button onclick="show('recepty')">Рецепты</button>
-  <button onclick="show('plan')">План</button>
-</nav>
+<main>
 
-<!-- ЗАПАСЫ -->
-<div id="zapasy" class="tab active">
-  <p class="updated">Обновлено: 15 марта 2026</p>
-  <div class="hint">Чтобы обновить запасы — скажи Клоду что изменилось, он сам поправит файл и сделает git push.</div>
+  <!-- SETUP TAB -->
+  <div class="tab active" id="tab-setup">
+    <div class="setup-card">
+      <h2>Подключение</h2>
+      <p>Введи GitHub токен и репозиторий. Токен хранится только в браузере (localStorage) — никуда не отправляется кроме GitHub API.</p>
 
-  <h2>Холодильник</h2>
-  <table>
-    <tr><th>Продукт</th><th>Количество</th></tr>
-    <tr><td>Протеиновый йогурт</td><td><span class="badge">3 шт</span></td></tr>
-    <tr><td>Коттедж 3%</td><td><span class="badge">1.5 банки</span></td></tr>
-    <tr><td>Творог</td><td><span class="badge">2 × 500 г</span></td></tr>
-    <tr><td>Яйца крупные</td><td><span class="badge">17 шт</span></td></tr>
-    <tr><td>Моцарелла тёртая</td><td><span class="badge">200 г</span></td></tr>
-    <tr><td>Масло сливочное</td><td><span class="badge">2 × 200 г</span></td></tr>
-    <tr><td>Свёкла варёная</td><td><span class="badge">500 г</span></td></tr>
-    <tr><td>Тофу</td><td><span class="badge">300 г</span></td></tr>
-    <tr><td>Кинза свежая</td><td><span class="badge">1 пучок</span></td></tr>
-  </table>
+      <div class="field">
+        <label>GitHub Personal Access Token</label>
+        <input type="password" id="tokenInput" placeholder="github_pat_..." />
+      </div>
+      <div class="field">
+        <label>Репозиторий</label>
+        <input type="text" id="repoInput" value="lenaz2708/test_project" placeholder="owner/repo" />
+      </div>
+      <div class="field">
+        <label>Папка с едой (необязательно)</label>
+        <input type="text" id="folderInput" value="Еда" placeholder="Еда" />
+      </div>
 
-  <h2>Овощи / фрукты</h2>
-  <table>
-    <tr><th>Продукт</th><th>Количество</th></tr>
-    <tr><td>Батат</td><td><span class="badge">2 шт</span></td></tr>
-    <tr><td>Морковь</td><td><span class="badge">3.5 кг</span></td></tr>
-    <tr><td>Лук</td><td><span class="badge">2 шт</span></td></tr>
-    <tr><td>Чеснок</td><td><span class="badge">4 головки</span></td></tr>
-    <tr><td>Баклажаны</td><td><span class="badge">3 шт</span></td></tr>
-    <tr><td>Красный перец</td><td><span class="badge">3 шт</span></td></tr>
-    <tr><td>Капуста</td><td><span class="badge">1 кочан</span></td></tr>
-    <tr><td>Кольраби</td><td><span class="badge">2 шт</span></td></tr>
-  </table>
-
-  <h2>Консервы / сухое</h2>
-  <table>
-    <tr><th>Продукт</th><th>Количество</th></tr>
-    <tr><td>Тунец</td><td><span class="badge">4 банки</span></td></tr>
-    <tr><td>Хумус</td><td><span class="badge">560 г</span></td></tr>
-    <tr><td>Рис басмати</td><td><span class="badge">1 кг</span></td></tr>
-    <tr><td>Красная чечевица</td><td><span class="badge">700 г</span></td></tr>
-    <tr><td>Белая фасоль</td><td><span class="badge">500 г</span></td></tr>
-    <tr><td>Манка</td><td><span class="badge">500 г</span></td></tr>
-    <tr><td>Овсянка</td><td><span class="badge">500 г</span></td></tr>
-  </table>
-</div>
-
-<!-- МОРОЗИЛКА -->
-<div id="morozilka" class="tab">
-  <div class="hint">Заполни файл заморозка_готовое.md — и я обновлю эту страницу.</div>
-  <div class="card">
-    <h3>Готовые блюда</h3>
-    <p>Пока пусто — добавь первые блюда после готовки!</p>
+      <button class="btn-primary" id="loadBtn" onclick="loadAll()">
+        Загрузить запасы
+      </button>
+      <div class="status" id="setupStatus"></div>
+    </div>
   </div>
 
-  <h2>Что хорошо замораживается</h2>
-  <div class="card">
-    <span class="tag">✅ Мясные шарики</span>
-    <span class="tag">✅ Куриная печень</span>
-    <span class="tag">✅ Лосось в рагу</span>
-    <span class="tag">✅ Запечённые овощи</span>
-    <span class="tag">✅ Куриное филе</span>
-    <span class="tag">✅ Заливной пирог</span>
-    <span class="tag">✅ Маффины</span>
-    <span class="tag">❌ Панкейки</span>
-    <span class="tag">❌ Картошка в блюдах</span>
+  <!-- INVENTORY TAB -->
+  <div class="tab" id="tab-inventory">
+    <div class="section-hd">
+      <h2>Запасы</h2>
+      <button class="btn-accent" onclick="loadAll()">↻ Обновить</button>
+    </div>
+    <div class="files-row" id="filesRow"></div>
+    <div class="inv-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Продукт</th>
+            <th>Кол-во</th>
+            <th>Ед.</th>
+            <th>Категория</th>
+          </tr>
+        </thead>
+        <tbody id="invBody"></tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-<!-- РЕЦЕПТЫ -->
-<div id="recepty" class="tab">
-  <div class="card">
-    <h3>🥞 Панкейки на йогурте</h3>
-    <p>Йогурт 250г · 1 яйцо · мука 7 ст.л. · разрыхлитель 1 ч.л.<br>Средний огонь, под крышкой. Переворачивать когда верх матовый.</p>
-    <span class="tag">✅ Проверено</span>
+  <!-- PLAN TAB -->
+  <div class="tab" id="tab-plan">
+    <div class="section-hd">
+      <h2>План на неделю</h2>
+    </div>
+    <div class="regen-bar">
+      <button class="btn-accent" id="regenBtn" onclick="generatePlan()">✨ Сгенерировать план</button>
+    </div>
+    <div id="weekGrid" class="week-grid">
+      <div class="empty">
+        <div class="empty-icon">📅</div>
+        <h3>Ещё нет плана</h3>
+        <p>Сначала загрузи запасы, потом нажми «Сгенерировать план»</p>
+      </div>
+    </div>
   </div>
-  <div class="card">
-    <h3>🥞 Панкейки на коттедже</h3>
-    <p>Коттедж 250г · 2 яйца · мука 3 ст.л. · разрыхлитель 0.5 ч.л.<br>Больше белка чем на йогурте.</p>
-    <span class="tag">✅ Проверено</span>
-  </div>
-  <div class="card">
-    <h3>🍖 Мясные шарики в духовке</h3>
-    <p>Фарш 700г · яйцо · лук · чеснок<br>200°C · 22–25 минут. Можно заморозить сырыми или готовыми.</p>
-    <span class="tag">✅ Проверено</span> <span class="tag">❄️ Морозилка</span>
-  </div>
-  <div class="card">
-    <h3>🍗 Куриное филе в аэрогриле</h3>
-    <p>205°C · целым куском 16–20 мин · нарезанным 10–14 мин</p>
-    <span class="tag">❄️ Морозилка</span>
-  </div>
-  <div class="card">
-    <h3>🍗 Куриная печень с луком</h3>
-    <p>Лук до золотистости → печень на сильный огонь 7–10 мин.<br>Соль только в конце!</p>
-    <span class="tag">❄️ Морозилка</span>
-  </div>
-  <div class="card">
-    <h3>🐟 Лосось в духовке</h3>
-    <p>3 варианта: с овощами на противне / в сливочном соусе / томатное рагу</p>
-    <span class="tag">❄️ Морозилка</span>
-  </div>
-  <div class="card">
-    <h3>🥦 Запечённые овощи с кинзой</h3>
-    <p>Любые овощи крупными кубиками · масло · 200°C · 30–40 мин<br>Кинзу добавить после запекания.</p>
-    <span class="tag">❄️ Морозилка</span>
-  </div>
-  <div class="card">
-    <h3>🍄 Заливной пирог с грибами</h3>
-    <p>Тесто: йогурт 200г + 2 яйца + мука 1 стакан + разрыхлитель<br>Начинка: грибы + лук + коттедж · 180°C · 35–40 мин</p>
-  </div>
-</div>
 
-<!-- ПЛАН -->
-<div id="plan" class="tab">
-  <div class="hint">Напиши Клоду "составь план на неделю" — он заполнит этот раздел на основе твоих запасов.</div>
-  <div class="card">
-    <h3>Готовка 1</h3>
-    <p>—</p>
+  <!-- SHOPPING TAB -->
+  <div class="tab" id="tab-shop">
+    <div class="section-hd">
+      <h2>Список покупок</h2>
+      <button class="btn-accent" id="shopBtn" onclick="generateShop()">✨ Составить список</button>
+    </div>
+    <div id="shopGrid" class="shop-grid">
+      <div class="empty">
+        <div class="empty-icon">🛒</div>
+        <h3>Список пуст</h3>
+        <p>Сначала создай план питания, потом нажми «Составить список»</p>
+      </div>
+    </div>
   </div>
-  <div class="card">
-    <h3>Готовка 2</h3>
-    <p>—</p>
-  </div>
-  <div class="card">
-    <h3>Готовка 3</h3>
-    <p>—</p>
-  </div>
-</div>
+
+</main>
+
+<div class="toast" id="toast"></div>
 
 <script>
-function show(id) {
+// ── STATE ──
+let token = localStorage.getItem('gh_token') || '';
+let repo  = localStorage.getItem('gh_repo')  || 'lenaz2708/test_project';
+let folder = localStorage.getItem('gh_folder') || 'Еда';
+let inventory = JSON.parse(localStorage.getItem('inventory') || '[]');
+let weekPlan  = JSON.parse(localStorage.getItem('weekPlan')  || '[]');
+let shopList  = JSON.parse(localStorage.getItem('shopList')  || '[]');
+
+// Restore inputs
+window.onload = () => {
+  document.getElementById('tokenInput').value = token;
+  document.getElementById('repoInput').value  = repo;
+  document.getElementById('folderInput').value = folder;
+  if (inventory.length) renderInventory();
+  if (weekPlan.length)  renderPlan();
+  if (shopList.length)  renderShop();
+};
+
+// ── TABS ──
+function showTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
   event.target.classList.add('active');
 }
-</script>
 
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('setupStatus');
+  el.textContent = msg;
+  el.className = 'status ' + type;
+}
+
+// ── GITHUB API ──
+async function ghFetch(url) {
+  const res = await fetch(url, {
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `${res.status} ${res.statusText}`);
+  }
+  return res.json();
+}
+
+// ── LOAD ALL FILES ──
+async function loadAll() {
+  token  = document.getElementById('tokenInput').value.trim();
+  repo   = document.getElementById('repoInput').value.trim();
+  folder = document.getElementById('folderInput').value.trim();
+
+  if (!token) { setStatus('Введи GitHub токен', 'error'); return; }
+
+  localStorage.setItem('gh_token', token);
+  localStorage.setItem('gh_repo', repo);
+  localStorage.setItem('gh_folder', folder);
+
+  const btn = document.getElementById('loadBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Загружаю...';
+  setStatus('Получаю список файлов...', 'info');
+
+  try {
+    // Get tree
+    const encodedFolder = encodeURIComponent(folder);
+    const tree = await ghFetch(`https://api.github.com/repos/${repo}/git/trees/main?recursive=1`);
+    const files = tree.tree.filter(f =>
+      f.type === 'blob' &&
+      f.path.startsWith(folder + '/') || f.path.startsWith(encodeURIComponent(folder) + '/')
+    );
+
+    // Also try without folder filter if nothing found
+    const allFiles = tree.tree.filter(f => f.type === 'blob');
+    const targetFiles = files.length ? files : allFiles;
+
+    // Show files
+    const filesRow = document.getElementById('filesRow');
+    filesRow.innerHTML = '';
+    targetFiles.forEach(f => {
+      const tag = document.createElement('div');
+      tag.className = 'file-tag';
+      tag.textContent = f.path.split('/').pop();
+      filesRow.appendChild(tag);
+    });
+
+    setStatus(`Читаю ${targetFiles.length} файлов...`, 'info');
+
+    // Read & parse each file
+    inventory = [];
+    for (const file of targetFiles) {
+      try {
+        const content = await ghFetch(`https://api.github.com/repos/${repo}/contents/${file.path}`);
+        const decoded = decodeURIComponent(escape(atob(content.content.replace(/\n/g, ''))));
+        const parsed  = parseFile(decoded, file.path);
+        inventory.push(...parsed);
+      } catch(e) {
+        console.warn('Skip', file.path, e.message);
+      }
+    }
+
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+    renderInventory();
+
+    setStatus(`✅ Загружено: ${targetFiles.length} файлов, ${inventory.length} продуктов`, 'success');
+    toast(`📦 ${inventory.length} продуктов загружено`);
+
+    // Switch to inventory tab
+    setTimeout(() => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-inventory').classList.add('active');
+      document.getElementById('nav-inventory').classList.add('active');
+    }, 800);
+
+  } catch(e) {
+    setStatus('Ошибка: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Загрузить запасы';
+  }
+}
+
+// ── PARSE FILE ──
+function parseFile(text, path) {
+  const items = [];
+  const ext = path.split('.').pop().toLowerCase();
+
+  try {
+    if (ext === 'json') {
+      const data = JSON.parse(text);
+      const arr = Array.isArray(data) ? data
+        : (data.items || data.products || data.inventory || data.еда || Object.values(data));
+      arr.forEach(item => {
+        if (typeof item === 'string') {
+          items.push({ name: item, quantity: '', unit: '', category: '' });
+        } else if (typeof item === 'object' && item !== null) {
+          items.push({
+            name:     item.name || item.название || item.продукт || item.item || '',
+            quantity: item.quantity || item.количество || item.qty || item.amount || '',
+            unit:     item.unit || item.единица || item.ед || '',
+            category: item.category || item.категория || item.type || item.тип || ''
+          });
+        }
+      });
+    } else if (ext === 'csv' || ext === 'tsv') {
+      const sep = ext === 'tsv' ? '\t' : ',';
+      const lines = text.trim().split('\n').filter(Boolean);
+      if (lines.length < 2) return items;
+      const headers = lines[0].split(sep).map(h => h.trim().toLowerCase().replace(/"/g,''));
+      lines.slice(1).forEach(line => {
+        const cols = line.split(sep).map(c => c.trim().replace(/^"|"$/g,''));
+        const o = {};
+        headers.forEach((h, i) => o[h] = cols[i] || '');
+        items.push({
+          name:     o.name     || o.название || o.продукт || o.item || cols[0] || '',
+          quantity: o.quantity || o.количество || o.qty    || cols[1] || '',
+          unit:     o.unit     || o.единица   || o.ед      || cols[2] || '',
+          category: o.category || o.категория || o.тип     || cols[3] || ''
+        });
+      });
+    } else {
+      // Plain text
+      text.split('\n').filter(l => l.trim() && !l.startsWith('#')).forEach(line => {
+        const parts = line.split(/[\t,;]/).map(p => p.trim());
+        items.push({
+          name: parts[0] || line.trim(),
+          quantity: parts[1] || '',
+          unit: parts[2] || '',
+          category: parts[3] || ''
+        });
+      });
+    }
+  } catch(e) { console.warn('Parse error', path, e); }
+
+  return items.filter(i => i.name);
+}
+
+// ── RENDER INVENTORY ──
+function renderInventory() {
+  const tbody = document.getElementById('invBody');
+  if (!inventory.length) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--muted)">Продукты не найдены</td></tr>';
+    return;
+  }
+  tbody.innerHTML = inventory.map(item => `
+    <tr>
+      <td>${item.name}</td>
+      <td>${item.quantity}</td>
+      <td>${item.unit}</td>
+      <td>${item.category ? `<span class="tag">${item.category}</span>` : ''}</td>
+    </tr>
+  `).join('');
+}
+
+// ── GENERATE PLAN ──
+async function generatePlan() {
+  if (!inventory.length) { toast('Сначала загрузи запасы!'); return; }
+
+  const btn = document.getElementById('regenBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Составляю...';
+
+  const invText = inventory.map(i =>
+    `${i.name}${i.quantity ? ' ' + i.quantity : ''}${i.unit ? ' ' + i.unit : ''}${i.category ? ' (' + i.category + ')' : ''}`
+  ).join('\n');
+
+  const prompt = `Вот мои продукты:\n${invText}\n\nСоставь план питания на 7 дней (пн–вс). Используй эти продукты максимально. Для каждого дня — завтрак, обед, ужин.\n\nОтветь ТОЛЬКО JSON без markdown:\n{"days":[{"day":"Понедельник","breakfast":"...","lunch":"...","dinner":"..."},...]}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    weekPlan = JSON.parse(clean).days;
+    localStorage.setItem('weekPlan', JSON.stringify(weekPlan));
+    renderPlan();
+    toast('📅 План готов!');
+  } catch(e) {
+    toast('Ошибка генерации: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ Пересоставить план';
+  }
+}
+
+// ── RENDER PLAN ──
+function renderPlan() {
+  const grid = document.getElementById('weekGrid');
+  if (!weekPlan.length) return;
+  grid.innerHTML = weekPlan.map(d => `
+    <div class="day-card">
+      <div class="day-name">${d.day}</div>
+      <div class="meal"><span class="meal-lbl">Завтрак</span><span class="meal-txt">${d.breakfast}</span></div>
+      <div class="meal"><span class="meal-lbl">Обед</span><span class="meal-txt">${d.lunch}</span></div>
+      <div class="meal"><span class="meal-lbl">Ужин</span><span class="meal-txt">${d.dinner}</span></div>
+    </div>
+  `).join('');
+}
+
+// ── GENERATE SHOPPING LIST ──
+async function generateShop() {
+  if (!weekPlan.length) { toast('Сначала создай план!'); return; }
+
+  const btn = document.getElementById('shopBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Составляю...';
+
+  const planText = weekPlan.map(d =>
+    `${d.day}: завтрак — ${d.breakfast}; обед — ${d.lunch}; ужин — ${d.dinner}`
+  ).join('\n');
+
+  const haveText = inventory.map(i => i.name).join(', ');
+
+  const prompt = `Вот план питания на неделю:\n${planText}\n\nЕсть дома: ${haveText}\n\nЧто нужно докупить? Составь список покупок по категориям.\n\nОтветь ТОЛЬКО JSON:\n{"categories":[{"name":"Овощи","emoji":"🥦","items":["помидоры","огурцы"]},...]}`; 
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    shopList = JSON.parse(clean).categories;
+    localStorage.setItem('shopList', JSON.stringify(shopList));
+    renderShop();
+    toast('🛒 Список покупок готов!');
+  } catch(e) {
+    toast('Ошибка: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '✨ Обновить список';
+  }
+}
+
+// ── RENDER SHOP ──
+function renderShop() {
+  const grid = document.getElementById('shopGrid');
+  if (!shopList.length) return;
+  grid.innerHTML = shopList.map((cat, ci) => `
+    <div class="shop-cat">
+      <div class="shop-cat-name">${cat.emoji || '•'} ${cat.name}</div>
+      ${cat.items.map((item, ii) => `
+        <div class="shop-item" id="si-${ci}-${ii}" onclick="toggleItem(${ci},${ii})">
+          <div class="check-box">✓</div>
+          <span>${item}</span>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function toggleItem(ci, ii) {
+  document.getElementById(`si-${ci}-${ii}`).classList.toggle('checked');
+}
+</script>
 </body>
 </html>
