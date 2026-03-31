@@ -6,34 +6,52 @@
   <title>Моя кухня</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #333; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f9f8; color: #333; }
     header { background: #2a9d8f; color: white; padding: 20px; text-align: center; }
     header h1 { font-size: 24px; font-weight: 700; }
     header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
     nav { display: flex; background: white; border-bottom: 2px solid #2a9d8f; overflow-x: auto; }
-    nav button { flex: 1; min-width: 80px; padding: 12px 8px; border: none; background: none; cursor: pointer; font-size: 13px; color: #666; transition: all 0.2s; }
-    nav button.active { color: #2a9d8f; border-bottom: 2px solid #2a9d8f; font-weight: 600; margin-bottom: -2px; }
-    .tab { display: none; padding: 16px; }
+    nav button { flex: 1; min-width: 70px; padding: 12px 6px; border: none; background: none; cursor: pointer; font-size: 12px; color: #666; }
+    nav button.active { color: #2a9d8f; border-bottom: 3px solid #2a9d8f; font-weight: 600; margin-bottom: -2px; }
+    .tab { display: none; padding: 14px; }
     .tab.active { display: block; }
     .card { background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    .card h2 { font-size: 16px; color: #2a9d8f; margin-bottom: 12px; }
+    .card h2 { font-size: 15px; color: #2a9d8f; margin-bottom: 12px; font-weight: 700; }
     table { width: 100%; border-collapse: collapse; font-size: 14px; }
     td, th { padding: 8px 6px; text-align: left; border-bottom: 1px solid #f0f0f0; }
-    th { font-weight: 600; color: #888; font-size: 12px; text-transform: uppercase; }
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
-    .badge.ok { background: #e8f5e9; color: #2e7d32; }
-    .badge.low { background: #fff3e0; color: #e65100; }
-    .recipe-list { list-style: none; }
-    .recipe-list li { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-    .recipe-list li:last-child { border-bottom: none; }
-    .emoji { margin-right: 6px; }
-    .freeze-good { color: #2e7d32; font-size: 13px; padding: 4px 0; }
-    .freeze-bad { color: #c62828; font-size: 13px; padding: 4px 0; }
-    .plan-block { background: #f0f9f8; border-left: 4px solid #2a9d8f; padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
-    .plan-block h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
-    .plan-block p { font-size: 13px; color: #666; }
-    .tip { background: #e0f5f3; padding: 12px; border-radius: 8px; font-size: 13px; color: #555; margin-bottom: 12px; }
+    th { font-weight: 600; color: #888; font-size: 11px; text-transform: uppercase; }
+    .badge.ok { background: #e0f5f3; color: #2a9d8f; padding: 2px 8px; border-radius: 20px; font-size: 12px; display: inline-block; }
+    .badge.low { background: #fff3e0; color: #e65100; padding: 2px 8px; border-radius: 20px; font-size: 12px; display: inline-block; }
+    .plan-block { background: #e0f5f3; border-left: 4px solid #2a9d8f; padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
+    .plan-block h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .plan-block p { font-size: 13px; color: #555; }
+    .tip { background: #e0f5f3; padding: 12px; border-radius: 8px; font-size: 13px; color: #2a6b62; margin-bottom: 12px; }
     .updated { font-size: 11px; color: #aaa; text-align: right; margin-top: 8px; }
+    .freeze-good { color: #2e7d32; font-size: 13px; padding: 3px 0; }
+    .freeze-bad { color: #c62828; font-size: 13px; padding: 3px 0; }
+
+    /* Рецепты */
+    .recipe-item { border-bottom: 1px solid #f0f0f0; }
+    .recipe-item:last-child { border-bottom: none; }
+    .recipe-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; }
+    .recipe-title { font-size: 14px; font-weight: 500; }
+    .recipe-time { font-size: 11px; color: #aaa; }
+    .recipe-arrow { color: #2a9d8f; font-size: 18px; transition: transform 0.2s; }
+    .recipe-arrow.open { transform: rotate(90deg); }
+    .recipe-body { display: none; background: #f9fefe; border-radius: 8px; padding: 12px; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+    .recipe-body.open { display: block; }
+    .recipe-body h4 { font-size: 12px; color: #2a9d8f; text-transform: uppercase; margin: 10px 0 4px; }
+    .recipe-body ul { padding-left: 16px; }
+    .recipe-body li { margin-bottom: 3px; }
+    .recipe-body ol { padding-left: 16px; }
+    .recipe-body .warn { background: #fff8e1; padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 12px; color: #666; }
+
+    /* Список покупок */
+    .shop-item { display: flex; align-items: center; padding: 9px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
+    .shop-item input[type=checkbox] { margin-right: 10px; width: 18px; height: 18px; accent-color: #2a9d8f; }
+    .shop-item.checked label { text-decoration: line-through; color: #bbb; }
+    .shop-section { font-size: 11px; color: #2a9d8f; text-transform: uppercase; font-weight: 700; padding: 10px 0 4px; }
+    .clear-btn { background: #2a9d8f; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; width: 100%; margin-top: 12px; }
   </style>
 </head>
 <body>
@@ -45,10 +63,52 @@
 
 <nav>
   <button class="active" onclick="showTab('plan', this)">📅 План</button>
+  <button onclick="showTab('shop', this)">🛒 Покупки</button>
   <button onclick="showTab('zapasy', this)">📦 Запасы</button>
   <button onclick="showTab('morozilka', this)">❄️ Морозилка</button>
   <button onclick="showTab('recepty', this)">👩‍🍳 Рецепты</button>
 </nav>
+
+<!-- ПЛАН -->
+<div id="plan" class="tab active">
+  <div class="tip">3 готовки в неделю · ~1–1.5 часа каждая · часть сразу в заморозку</div>
+  <div class="plan-block">
+    <h3>🟠 Готовка 1 (воскресенье)</h3>
+    <p>Пока не заполнено</p>
+  </div>
+  <div class="plan-block">
+    <h3>🟠 Готовка 2 (вторник)</h3>
+    <p>Пока не заполнено</p>
+  </div>
+  <div class="plan-block">
+    <h3>🟠 Готовка 3 (четверг)</h3>
+    <p>Пока не заполнено</p>
+  </div>
+</div>
+
+<!-- СПИСОК ПОКУПОК -->
+<div id="shop" class="tab">
+  <div class="card">
+    <h2>Список покупок</h2>
+    <div class="shop-section">Мясо / рыба</div>
+    <div class="shop-item" id="si1"><input type="checkbox" id="c1" onchange="toggleItem('si1')"><label for="c1"></label></div>
+
+    <div class="shop-section">Молочное / яйца</div>
+    <div class="shop-item" id="si2"><input type="checkbox" id="c2" onchange="toggleItem('si2')"><label for="c2"></label></div>
+
+    <div class="shop-section">Овощи / фрукты</div>
+    <div class="shop-item" id="si3"><input type="checkbox" id="c3" onchange="toggleItem('si3')"><label for="c3"></label></div>
+
+    <div class="shop-section">Крупы / бобовые</div>
+    <div class="shop-item" id="si4"><input type="checkbox" id="c4" onchange="toggleItem('si4')"><label for="c4"></label></div>
+
+    <div class="shop-section">Консервы / разное</div>
+    <div class="shop-item" id="si5"><input type="checkbox" id="c5" onchange="toggleItem('si5')"><label for="c5"></label></div>
+
+    <button class="clear-btn" onclick="clearAll()">✓ Очистить список</button>
+    <p style="font-size:12px; color:#aaa; margin-top:8px; text-align:center;">Список заполняется вместе с планом</p>
+  </div>
+</div>
 
 <!-- ЗАПАСЫ -->
 <div id="zapasy" class="tab">
@@ -67,7 +127,6 @@
       <tr><td>Кинза свежая</td><td><span class="badge ok">1 пучок</span></td></tr>
     </table>
   </div>
-
   <div class="card">
     <h2>Овощи / фрукты</h2>
     <table>
@@ -82,7 +141,6 @@
       <tr><td>Кольраби</td><td><span class="badge ok">2 шт</span></td></tr>
     </table>
   </div>
-
   <div class="card">
     <h2>Консервы / сухое</h2>
     <table>
@@ -104,7 +162,7 @@
 <div id="morozilka" class="tab">
   <div class="card">
     <h2>Готовые блюда</h2>
-    <p style="color:#aaa; font-size:14px; padding: 10px 0;">Пока пусто — заполни после первой готовки!</p>
+    <p style="color:#aaa; font-size:14px; padding:8px 0;">Пока пусто — заполни после первой готовки!</p>
   </div>
   <div class="card">
     <h2>Что хорошо замораживается</h2>
@@ -122,45 +180,234 @@
   </div>
 </div>
 
-<!-- ПЛАН -->
-<div id="plan" class="tab active">
-  <div class="tip">3 готовки в неделю по ~1–1.5 часа. Часть сразу в заморозку.</div>
-  <div class="plan-block">
-    <h3>🟠 Готовка 1 (воскресенье)</h3>
-    <p>Пока не заполнено</p>
-  </div>
-  <div class="plan-block">
-    <h3>🟠 Готовка 2 (вторник)</h3>
-    <p>Пока не заполнено</p>
-  </div>
-  <div class="plan-block">
-    <h3>🟠 Готовка 3 (четверг)</h3>
-    <p>Пока не заполнено</p>
-  </div>
-</div>
-
 <!-- РЕЦЕПТЫ -->
 <div id="recepty" class="tab">
   <div class="card">
-    <h2>Проверенные рецепты</h2>
-    <ul class="recipe-list">
-      <li><span class="emoji">🥞</span>Панкейки на йогурте (с яблоками или без)</li>
-      <li><span class="emoji">🥞</span>Панкейки на коттедже</li>
-      <li><span class="emoji">🍖</span>Мясные шарики в духовке</li>
-      <li><span class="emoji">🍗</span>Куриное филе в аэрогриле</li>
-      <li><span class="emoji">🫀</span>Куриная печень с луком</li>
-      <li><span class="emoji">🐟</span>Лосось в духовке</li>
-      <li><span class="emoji">🥦</span>Запечённые овощи с кинзой</li>
-      <li><span class="emoji">🥧</span>Заливной пирог с грибами</li>
-      <li><span class="emoji">🧁</span>Запеканка из теста панкейков</li>
-    </ul>
+    <h2>Рецепты — нажми чтобы открыть</h2>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r1')">
+        <div><div class="recipe-title">🥞 Панкейки на йогурте</div><div class="recipe-time">~30 мин · ✅ Проверено</div></div>
+        <div class="recipe-arrow" id="arr-r1">›</div>
+      </div>
+      <div class="recipe-body" id="r1">
+        <h4>Ингредиенты</h4>
+        <ul>
+          <li>Йогурт — 250 г (или 200 г, тогда муки 130 г)</li>
+          <li>Яйцо — 1 шт</li>
+          <li>Мука — 150–160 г (≈ 7 ст.л. с горкой)</li>
+          <li>Разрыхлитель — 1 ч.л.</li>
+          <li>Сахарозаменитель — 1–2 ч.л. (в 10 раз слаще сахара!)</li>
+          <li>Соль — щепотка</li>
+          <li>Корица / ваниль — по желанию</li>
+          <li><b>+ яблоко на тёрке</b> — по желанию</li>
+        </ul>
+        <h4>Приготовление</h4>
+        <ol>
+          <li>Смешать йогурт, яйцо, сахар, соль</li>
+          <li>Добавить муку с разрыхлителем — тесто как густая сметана</li>
+          <li>Если с яблоком — вмешать в конце</li>
+          <li>Жарить на среднем огне под крышкой, 2–3 мин с каждой стороны</li>
+          <li>Переворачивать когда верх матовый и появились пузырьки</li>
+        </ol>
+        <div class="warn">💡 В духовке: форма 20–22 см, 180°C, 25–30 мин. Или маффины — 20–25 мин.</div>
+      </div>
+    </div>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r2')">
+        <div><div class="recipe-title">🥞 Панкейки на коттедже</div><div class="recipe-time">~30 мин · больше белка · ✅ Проверено</div></div>
+        <div class="recipe-arrow" id="arr-r2">›</div>
+      </div>
+      <div class="recipe-body" id="r2">
+        <h4>Ингредиенты</h4>
+        <ul>
+          <li>Коттедж — 250 г</li>
+          <li>Яйца — 2 шт</li>
+          <li>Мука — 3 ст.л. с горкой (50–60 г)</li>
+          <li>Разрыхлитель — 0.5–1 ч.л.</li>
+          <li>Сахарозаменитель — по вкусу</li>
+          <li>Соль — щепотка</li>
+          <li><b>+ яблоко на тёрке</b> — по желанию</li>
+        </ul>
+        <h4>Приготовление</h4>
+        <ol>
+          <li>Коттедж размять вилкой (или блендером — для гладкой текстуры)</li>
+          <li>Смешать с яйцами, сахаром, солью</li>
+          <li>Добавить муку с разрыхлителем — тесто густое</li>
+          <li>Жарить на среднем огне, 2–3 мин с каждой стороны, под крышкой</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r3')">
+        <div><div class="recipe-title">🍖 Мясные шарики в духовке</div><div class="recipe-time">~45 мин · ✅ в заморозку</div></div>
+        <div class="recipe-arrow" id="arr-r3">›</div>
+      </div>
+      <div class="recipe-body" id="r3">
+        <h4>Ингредиенты (~20 шариков)</h4>
+        <ul>
+          <li>Фарш — 700 г</li>
+          <li>Яйцо — 1 шт</li>
+          <li>Лук — 1 шт</li>
+          <li>Чеснок — 2 зубчика</li>
+          <li>Соль, перец</li>
+          <li>Панировочные сухари — 3 ст.л. (по желанию)</li>
+        </ul>
+        <h4>Приготовление</h4>
+        <ol>
+          <li>Лук и чеснок натереть или мелко нарезать</li>
+          <li>Смешать всё с фаршем, посолить, поперчить</li>
+          <li>Слепить шарики размером с мячик для гольфа</li>
+          <li>Выложить на противень с пергаментом</li>
+          <li>Духовка 200°C — 22–25 минут</li>
+        </ol>
+        <div class="warn">❄️ Заморозка: сырыми (заморозить на доске, потом в пакет) или готовыми (остудить, разложить по порциям)</div>
+      </div>
+    </div>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r4')">
+        <div><div class="recipe-title">🍗 Куриное филе в аэрогриле</div><div class="recipe-time">12–20 мин · 205°C</div></div>
+        <div class="recipe-arrow" id="arr-r4">›</div>
+      </div>
+      <div class="recipe-body" id="r4">
+        <h4>Время</h4>
+        <ul>
+          <li>Целым куском — 16–20 мин</li>
+          <li>Нарезанное — 10–14 мин</li>
+          <li>Тонкое — от 12 мин (проверено!)</li>
+        </ul>
+        <h4>Готовность</h4>
+        <ul>
+          <li>Внутри нет розового, сок прозрачный</li>
+        </ul>
+        <h4>Простой маринад</h4>
+        <ul>
+          <li>Оливковое масло + чеснок + соль + перец + лимон</li>
+          <li>Мариновать 15–30 минут</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r5')">
+        <div><div class="recipe-title">🫀 Куриная печень с луком</div><div class="recipe-time">~20 мин · ✅ в заморозку</div></div>
+        <div class="recipe-arrow" id="arr-r5">›</div>
+      </div>
+      <div class="recipe-body" id="r5">
+        <h4>Ингредиенты</h4>
+        <ul>
+          <li>Куриная печень — 500 г</li>
+          <li>Лук — 1–2 шт</li>
+          <li>Масло для жарки</li>
+          <li>Соль, перец — <b>только в конце!</b></li>
+          <li>По желанию: тимьян, паприка, бальзамик</li>
+        </ul>
+        <h4>Приготовление</h4>
+        <ol>
+          <li>Промыть, обрезать протоки и зелёные пятна</li>
+          <li>Обжарить лук до золотистости</li>
+          <li>Добавить печень на сильный огонь</li>
+          <li>Жарить 7–10 мин, помешивая</li>
+          <li>Соль — только в конце!</li>
+        </ol>
+        <div class="warn">💡 Для нежности: замочить в молоке на 30 мин. Для паштета: пробить блендером с каплей масла или йогурта.</div>
+      </div>
+    </div>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r6')">
+        <div><div class="recipe-title">🐟 Лосось в духовке</div><div class="recipe-time">~40 мин · 3 варианта</div></div>
+        <div class="recipe-arrow" id="arr-r6">›</div>
+      </div>
+      <div class="recipe-body" id="r6">
+        <h4>Вариант 1 — с овощами на противне</h4>
+        <ol>
+          <li>Овощи (картошка, морковь, перец, лук) на противень, масло, соль → 200°C, 20 мин</li>
+          <li>Добавить лосось сверху → ещё 15–20 мин</li>
+        </ol>
+        <h4>Вариант 2 — в сливочном соусе</h4>
+        <ol>
+          <li>Обжарить лосось кубиками, отложить</li>
+          <li>Лук + перец + чеснок обжарить</li>
+          <li>Влить сливки/йогурт, добавить фасоль и горошек, 5 мин</li>
+          <li>Вернуть лосось, ещё 5 мин</li>
+        </ol>
+        <h4>Вариант 3 — томатное рагу</h4>
+        <ol>
+          <li>Обжарить лук, морковь, перец</li>
+          <li>Добавить помидоры → тушить 10–15 мин до соуса</li>
+          <li>Добавить фасоль и горошек</li>
+          <li>Выложить сырой лосось в соус, накрыть крышкой → 10–12 мин</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r7')">
+        <div><div class="recipe-title">🥦 Запечённые овощи с кинзой</div><div class="recipe-time">~40 мин · ✅ в заморозку</div></div>
+        <div class="recipe-arrow" id="arr-r7">›</div>
+      </div>
+      <div class="recipe-body" id="r7">
+        <h4>Ингредиенты</h4>
+        <ul>
+          <li>Любые овощи: баклажан, кабачок, перец, помидоры, лук, морковь</li>
+          <li>Оливковое масло, соль, перец</li>
+          <li>Кинза — добавить после запекания</li>
+        </ul>
+        <h4>Приготовление</h4>
+        <ol>
+          <li>Нарезать кубиками ~2–3 см</li>
+          <li>На противень, полить маслом, посолить, перемешать</li>
+          <li>200°C, 30–40 мин до румяности</li>
+          <li>Пересыпать в миску, добавить кинзу, дать настояться 10 мин</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="recipe-item">
+      <div class="recipe-header" onclick="toggleRecipe('r8')">
+        <div><div class="recipe-title">🥧 Заливной пирог с грибами</div><div class="recipe-time">~1 час</div></div>
+        <div class="recipe-arrow" id="arr-r8">›</div>
+      </div>
+      <div class="recipe-body" id="r8">
+        <h4>Начинка</h4>
+        <ul>
+          <li>Грибы — 300–400 г</li>
+          <li>Лук — 1–2 шт, чеснок — 1–2 зубчика</li>
+          <li>Коттедж — 200–250 г</li>
+          <li>Соль, перец, мускатный орех</li>
+        </ul>
+        <h4>Тесто</h4>
+        <ul>
+          <li>Йогурт — 200 г</li>
+          <li>Яйца — 2 шт</li>
+          <li>Мука — 130–150 г</li>
+          <li>Разрыхлитель — 1 ч.л., соль — 0.5 ч.л.</li>
+          <li>Масло растительное — 3 ст.л.</li>
+        </ul>
+        <h4>Приготовление</h4>
+        <ol>
+          <li>Грибы и лук обжарить, остудить, смешать с коттеджем</li>
+          <li>Смешать тесто</li>
+          <li>Форма: половина теста → начинка → остальное тесто</li>
+          <li>180°C, 35–40 мин</li>
+          <li>Дать постоять 10–15 мин перед нарезкой!</li>
+        </ol>
+        <div class="warn">⚠️ Просто запеканка (без муки в тесте) — разваливается. Нужна именно заливка!</div>
+      </div>
+    </div>
+
   </div>
+
   <div class="card">
     <h2>Подсказки</h2>
     <table>
       <tr><td>🍬 Сахарозаменитель</td><td>в 10 раз слаще — брать в 10 раз меньше</td></tr>
-      <tr><td>🌡️ Куриное филе в аэрогриле</td><td>205°C, 12–16 мин</td></tr>
-      <tr><td>🥞 Панкейки</td><td>переворачивать когда верх матовый и с пузырьками</td></tr>
+      <tr><td>🌡️ Аэрогриль</td><td>205°C, 12–16 мин</td></tr>
+      <tr><td>🥞 Панкейки</td><td>переворачивать когда верх матовый + пузырьки</td></tr>
       <tr><td>🧂 Печень</td><td>солить только в конце!</td></tr>
     </table>
   </div>
@@ -172,6 +419,22 @@
     document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
+  }
+
+  function toggleRecipe(id) {
+    const body = document.getElementById(id);
+    const arr = document.getElementById('arr-' + id);
+    body.classList.toggle('open');
+    arr.classList.toggle('open');
+  }
+
+  function toggleItem(id) {
+    document.getElementById(id).classList.toggle('checked');
+  }
+
+  function clearAll() {
+    document.querySelectorAll('.shop-item input').forEach(cb => cb.checked = false);
+    document.querySelectorAll('.shop-item').forEach(item => item.classList.remove('checked'));
   }
 </script>
 
