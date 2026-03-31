@@ -44,14 +44,14 @@
 </header>
 
 <nav>
-  <button class="active" onclick="showTab('zapasy', this)">📦 Запасы</button>
+  <button class="active" onclick="showTab('plan', this)">📅 План</button>
+  <button onclick="showTab('zapasy', this)">📦 Запасы</button>
   <button onclick="showTab('morozilka', this)">❄️ Морозилка</button>
-  <button onclick="showTab('plan', this)">📅 План</button>
   <button onclick="showTab('recepty', this)">👩‍🍳 Рецепты</button>
 </nav>
 
 <!-- ЗАПАСЫ -->
-<div id="zapasy" class="tab active">
+<div id="zapasy" class="tab">
   <div class="card">
     <h2>Холодильник</h2>
     <table>
@@ -123,7 +123,7 @@
 </div>
 
 <!-- ПЛАН -->
-<div id="plan" class="tab">
+<div id="plan" class="tab active">
   <div class="tip">3 готовки в неделю по ~1–1.5 часа. Часть сразу в заморозку.</div>
   <div class="plan-block">
     <h3>🟠 Готовка 1 (воскресенье)</h3>
