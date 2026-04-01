@@ -3,95 +3,343 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Моя кухня</title>
+  <title>Меню и запасы</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f9f8; color: #333; }
-    header { background: #2a9d8f; color: white; padding: 20px; text-align: center; }
-    header h1 { font-size: 24px; font-weight: 700; }
-    header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
-    nav { display: flex; background: white; border-bottom: 2px solid #2a9d8f; overflow-x: auto; }
-    nav button { flex: 1; min-width: 70px; padding: 12px 6px; border: none; background: none; cursor: pointer; font-size: 12px; color: #666; }
-    nav button.active { color: #2a9d8f; border-bottom: 3px solid #2a9d8f; font-weight: 600; margin-bottom: -2px; }
-    .tab { display: none; padding: 14px; }
-    .tab.active { display: block; }
-    .card { background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    .card h2 { font-size: 15px; color: #2a9d8f; margin-bottom: 12px; font-weight: 700; }
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    td, th { padding: 8px 6px; text-align: left; border-bottom: 1px solid #f0f0f0; }
-    th { font-weight: 600; color: #888; font-size: 11px; text-transform: uppercase; }
-    .badge.ok { background: #e0f5f3; color: #2a9d8f; padding: 2px 8px; border-radius: 20px; font-size: 12px; display: inline-block; }
-    .badge.low { background: #fff3e0; color: #e65100; padding: 2px 8px; border-radius: 20px; font-size: 12px; display: inline-block; }
-    .plan-block { background: #e0f5f3; border-left: 4px solid #2a9d8f; padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
-    .plan-block h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-    .plan-block p { font-size: 13px; color: #555; }
-    .tip { background: #e0f5f3; padding: 12px; border-radius: 8px; font-size: 13px; color: #2a6b62; margin-bottom: 12px; }
-    .updated { font-size: 11px; color: #aaa; text-align: right; margin-top: 8px; }
-    .freeze-good { color: #2e7d32; font-size: 13px; padding: 3px 0; }
-    .freeze-bad { color: #c62828; font-size: 13px; padding: 3px 0; }
+    :root {
+      --bg: #eef7f3;
+      --surface: #ffffff;
+      --surface-soft: #f7fbf8;
+      --line: #d7e6df;
+      --text: #23322c;
+      --muted: #667670;
+      --accent: #2a9d8f;
+      --accent-deep: #1f6d64;
+      --warn-bg: #fff1de;
+      --warn-text: #9b5a00;
+      --good: #2b8a57;
+      --bad: #bb5d00;
+      --shadow: 0 10px 30px rgba(36, 70, 58, 0.08);
+    }
 
-    /* Рецепты */
-    .recipe-item { border-bottom: 1px solid #f0f0f0; }
-    .recipe-item:last-child { border-bottom: none; }
-    .recipe-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; cursor: pointer; }
-    .recipe-title { font-size: 14px; font-weight: 500; }
-    .recipe-time { font-size: 11px; color: #aaa; }
-    .recipe-arrow { color: #2a9d8f; font-size: 18px; transition: transform 0.2s; }
-    .recipe-arrow.open { transform: rotate(90deg); }
-    .recipe-body { display: none; background: #f9fefe; border-radius: 8px; padding: 12px; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
-    .recipe-body.open { display: block; }
-    .recipe-body h4 { font-size: 12px; color: #2a9d8f; text-transform: uppercase; margin: 10px 0 4px; }
-    .recipe-body ul { padding-left: 16px; }
-    .recipe-body li { margin-bottom: 3px; }
-    .recipe-body ol { padding-left: 16px; }
-    .recipe-body .warn { background: #fff8e1; padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 12px; color: #666; }
-
-    /* Список покупок */
-    .shop-item { display: flex; align-items: center; padding: 9px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; }
-    .shop-item input[type=checkbox] { margin-right: 10px; width: 18px; height: 18px; accent-color: #2a9d8f; }
-    .shop-item.checked label { text-decoration: line-through; color: #bbb; }
-    .shop-section { font-size: 11px; color: #2a9d8f; text-transform: uppercase; font-weight: 700; padding: 10px 0 4px; }
-    .clear-btn { background: #2a9d8f; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; width: 100%; margin-top: 12px; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(42, 157, 143, 0.16), transparent 32%),
+        linear-gradient(180deg, #f4fbf8 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    header {
+      background: linear-gradient(135deg, #2a9d8f, #24796f);
+      color: #fff;
+      padding: 24px 20px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+    header h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 38px);
+      line-height: 1.1;
+    }
+    header p {
+      margin: 10px 0 0;
+      color: rgba(255, 255, 255, 0.86);
+      max-width: 56ch;
+    }
+    nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+    nav button {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--muted);
+      cursor: pointer;
+      padding: 12px 10px;
+      font: inherit;
+      font-weight: 600;
+      transition: 0.2s ease;
+      backdrop-filter: blur(8px);
+    }
+    nav button:hover,
+    nav button:focus-visible {
+      color: var(--accent-deep);
+      border-color: rgba(42, 157, 143, 0.45);
+      transform: translateY(-1px);
+      outline: none;
+    }
+    nav button.active {
+      background: var(--surface);
+      color: var(--accent-deep);
+      border-color: transparent;
+      box-shadow: var(--shadow);
+    }
+    .tab {
+      display: none;
+      animation: fade-in 0.2s ease;
+    }
+    .tab.active {
+      display: block;
+    }
+    .card,
+    .plan-block {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(215, 230, 223, 0.8);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+    }
+    .card {
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 16px;
+      color: var(--accent-deep);
+    }
+    .tip {
+      background: linear-gradient(135deg, rgba(42, 157, 143, 0.16), rgba(42, 157, 143, 0.08));
+      border: 1px solid rgba(42, 157, 143, 0.16);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: var(--accent-deep);
+      margin-bottom: 14px;
+    }
+    .plan-block {
+      padding: 16px;
+      margin-bottom: 12px;
+      border-left: 5px solid var(--accent);
+    }
+    .plan-block h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+    .plan-block p,
+    .plan-block li,
+    .plan-note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .plan-block ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid #edf3f0;
+      vertical-align: top;
+    }
+    th {
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: #80918a;
+    }
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge.ok {
+      background: rgba(43, 138, 87, 0.14);
+      color: var(--good);
+    }
+    .badge.low {
+      background: rgba(187, 93, 0, 0.15);
+      color: var(--bad);
+    }
+    .shop-section {
+      margin-top: 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .shop-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eef4f1;
+      cursor: pointer;
+    }
+    .shop-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+    }
+    .shop-item span {
+      transition: 0.2s ease;
+    }
+    .shop-item.checked span {
+      color: #9aa9a3;
+      text-decoration: line-through;
+    }
+    .clear-btn {
+      width: 100%;
+      margin-top: 14px;
+      border: none;
+      border-radius: 14px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      padding: 12px 14px;
+    }
+    .clear-btn:hover,
+    .clear-btn:focus-visible {
+      background: var(--accent-deep);
+      outline: none;
+    }
+    .recipe-item + .recipe-item {
+      border-top: 1px solid #eef4f1;
+    }
+    .recipe-header {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 14px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+    }
+    .recipe-heading {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .recipe-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .recipe-time {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .recipe-arrow {
+      font-size: 24px;
+      color: var(--accent);
+      transition: transform 0.2s ease;
+    }
+    .recipe-header[aria-expanded="true"] .recipe-arrow {
+      transform: rotate(90deg);
+    }
+    .recipe-body {
+      background: var(--surface-soft);
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .recipe-body h4 {
+      margin: 10px 0 6px;
+      color: var(--accent-deep);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .recipe-body p,
+    .recipe-body li {
+      margin: 0 0 6px;
+    }
+    .recipe-body ul,
+    .recipe-body ol {
+      margin: 0 0 8px 18px;
+      padding: 0;
+    }
+    .recipe-body .warn {
+      background: var(--warn-bg);
+      color: var(--warn-text);
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .freeze-good,
+    .freeze-bad {
+      padding: 5px 0;
+      font-size: 14px;
+    }
+    .freeze-good { color: var(--good); }
+    .freeze-bad { color: var(--bad); }
+    .empty-state {
+      color: var(--muted);
+      margin: 8px 0 0;
+    }
+    code {
+      background: rgba(35, 50, 44, 0.06);
+      padding: 0 4px;
+      border-radius: 6px;
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 640px) {
+      .page {
+        padding: 16px 12px 32px;
+      }
+      header {
+        border-radius: 18px;
+      }
+      .card,
+      .plan-block {
+        border-radius: 16px;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="page">
+    <header>
+      <h1>Меню и запасы</h1>
+      <p>Личный food hub: план недели, покупки, запасы, морозилка и рецепты в одном месте.</p>
+    </header>
 
-<header>
-  <h1>🍳 Моя кухня</h1>
-  <p>Лена · семья 3 человека · 3 готовки в неделю</p>
-</header>
+    <nav>
+      <button class="active" type="button" data-tab-trigger="plan">План</button>
+      <button type="button" data-tab-trigger="shop">Покупки</button>
+      <button type="button" data-tab-trigger="zapasy">Запасы</button>
+      <button type="button" data-tab-trigger="morozilka">Морозилка</button>
+      <button type="button" data-tab-trigger="recepty">Рецепты</button>
+    </nav>
 
-<nav>
-  <button class="active" onclick="showTab('plan', this)">📅 План</button>
-  <button onclick="showTab('shop', this)">🛒 Покупки</button>
-  <button onclick="showTab('zapasy', this)">📦 Запасы</button>
-  <button onclick="showTab('morozilka', this)">❄️ Морозилка</button>
-  <button onclick="showTab('recepty', this)">👩‍🍳 Рецепты</button>
-</nav>
-
-<!-- ПЛАН -->
-<div id="plan" class="tab active">
-<!-- BUILD:PLAN -->
-<div class="tip">3 готовки в неделю · ~1–1.5 часа каждая · часть сразу в заморозку</div>
-<div class="plan-block">
-<h3>🟠 Готовка 1 (например, воскресенье)</h3>
-<p>Пока не заполнено</p>
-<p style="font-size:12px; color:#777; margin-top:3px;"><b>В холодильник:</b> (на 2-3 дня)</p>
-</div>
-<div class="plan-block">
-<h3>🟠 Готовка 2 (например, вторник)</h3>
-<p>Пока не заполнено</p>
-</div>
-<div class="plan-block">
-<h3>🟠 Готовка 3 (например, четверг)</h3>
-<p>Пока не заполнено</p>
-</div>
+    <section id="plan" class="tab active">
+      <!-- BUILD:PLAN -->
+<div class="tip">План собирается из markdown-файла недели. Обнови записи в папке Еда и снова запусти сборку.</div>
+<div class="plan-block"><h3>Готовка 1 (например, воскресенье)</h3><ul><li></li></ul><p class="plan-note"><strong>Что готовим:</strong></p><p class="plan-note"><strong>В холодильник:</strong> (на 2-3 дня)</p><p class="plan-note"><strong>В заморозку:</strong></p></div>
+<div class="plan-block"><h3>Готовка 2 (например, вторник)</h3><ul><li></li></ul><p class="plan-note"><strong>Что готовим:</strong></p><p class="plan-note"><strong>В холодильник:</strong></p><p class="plan-note"><strong>В заморозку:</strong></p></div>
+<div class="plan-block"><h3>Готовка 3 (например, четверг)</h3><ul><li></li></ul><p class="plan-note"><strong>Что готовим:</strong></p><p class="plan-note"><strong>В холодильник:</strong></p><p class="plan-note"><strong>В заморозку:</strong></p></div>
 <!-- /BUILD:PLAN -->
-</div>
+    </section>
 
-<!-- СПИСОК ПОКУПОК -->
-<div id="shop" class="tab">
-<!-- BUILD:SHOP -->
+    <section id="shop" class="tab">
+      <!-- BUILD:SHOP -->
 <div class="card">
 <h2>Список покупок</h2>
 <div class="shop-section">Мясо / рыба</div>
@@ -102,90 +350,27 @@
 <div class="shop-section">Заморозка (готовая)</div>
 <div class="shop-section">Разное</div>
 <div class="shop-section">Что закончилось дома (докупить)</div>
-<p style="color:#aaa; font-size:13px; padding:8px 0;">Список пуст — составляется вместе с планом</p>
-<button class="clear-btn" onclick="clearAll()">✓ Очистить список</button>
+<p class="empty-state">Список пуст. Добавь пункты в markdown-файл.</p>
+<button class="clear-btn" type="button" id="clear-shopping">Очистить отметки</button>
 </div>
 <!-- /BUILD:SHOP -->
-</div>
+    </section>
 
-<!-- ЗАПАСЫ -->
-<div id="zapasy" class="tab">
-<!-- BUILD:ZAPASY -->
-<div class="card">
-<h2>Холодильник</h2>
-<table>
-<tr><th>Продукт</th><th>Количество</th></tr>
-<tr><td>Протеиновый йогурт</td><td><span class="badge ok">3 шт</span></td></tr>
-<tr><td>Йогурт חלבון 23г</td><td><span class="badge ok">2 шт</span></td></tr>
-<tr><td>Коттедж 3%</td><td><span class="badge ok">1.5 банки</span></td></tr>
-<tr><td>Творог</td><td><span class="badge ok">2 × 500 г</span></td></tr>
-<tr><td>Гбина йом йом 5%</td><td><span class="badge ok">4 шт</span></td></tr>
-<tr><td>Яйца M</td><td><span class="badge ok">20 шт</span></td></tr>
-<tr><td>Моцарелла тёртая</td><td><span class="badge ok">200 г</span></td></tr>
-<tr><td>Масло сливочное</td><td><span class="badge ok">2 пачки по 200 г</span></td></tr>
-<tr><td>Свёкла варёная в вакууме</td><td><span class="badge ok">500 г</span></td></tr>
-<tr><td>Тофу</td><td><span class="badge ok">300 г</span></td></tr>
-<tr><td>Кинза свежая</td><td><span class="badge ok">1 пучок</span></td></tr>
-<tr><td>Пастерма צלויה</td><td><span class="badge ok">~330 г</span></td></tr>
-</table>
-</div>
-<div class="card">
-<h2>Овощи / фрукты</h2>
-<table>
-<tr><th>Продукт</th><th>Количество</th></tr>
-<tr><td>Батат крупный</td><td><span class="badge ok">2 шт</span></td></tr>
-<tr><td>Морковка</td><td><span class="badge ok">500 г + 3 кг</span></td></tr>
-<tr><td>Лук</td><td><span class="badge ok">2 шт</span></td></tr>
-<tr><td>Чеснок</td><td><span class="badge ok">4 головки</span></td></tr>
-<tr><td>Баклажаны</td><td><span class="badge ok">3 шт</span></td></tr>
-<tr><td>Красный перец</td><td><span class="badge ok">3 шт</span></td></tr>
-<tr><td>Капуста</td><td><span class="badge ok">1 кочан</span></td></tr>
-<tr><td>Кольраби</td><td><span class="badge ok">2 шт</span></td></tr>
-</table>
-</div>
-<div class="card">
-<h2>Мясо</h2>
-<table>
-<tr><th>Продукт</th><th>Количество</th></tr>
-<tr><td>Говяжий фарш</td><td><span class="badge ok">2.258 кг</span></td></tr>
-</table>
-</div>
-<div class="card">
-<h2>Консервы / сухое</h2>
-<table>
-<tr><th>Продукт</th><th>Количество</th></tr>
-<tr><td>Тунец</td><td><span class="badge ok">4 банки по 160 г</span></td></tr>
-<tr><td>Маринованные огурцы</td><td><span class="badge ok">1 банка</span></td></tr>
-<tr><td>Белая фасоль сухая</td><td><span class="badge ok">500 г</span></td></tr>
-<tr><td>Хумус консервированный</td><td><span class="badge ok">560 г</span></td></tr>
-<tr><td>Рис басмати</td><td><span class="badge ok">1 кг</span></td></tr>
-<tr><td>Красная чечевица</td><td><span class="badge ok">700 г</span></td></tr>
-<tr><td>Манка</td><td><span class="badge ok">500 г</span></td></tr>
-<tr><td>Овсянка</td><td><span class="badge ok">500 г</span></td></tr>
-<tr><td>Арахисовый порошок</td><td><span class="badge ok">200 г</span></td></tr>
-</table>
-</div>
-<div class="card">
-<h2>Хлеб / выпечка</h2>
-<table>
-<tr><th>Продукт</th><th>Количество</th></tr>
-<tr><td>Питы 500г</td><td><span class="badge ok">3 уп</span></td></tr>
-<tr><td>Сушёные абрикосы б/к</td><td><span class="badge ok">346 г</span></td></tr>
-</table>
-</div>
-<p class="updated">Обновлено: 19 марта 2026 (без учёта морозилки)</p>
+    <section id="zapasy" class="tab">
+      <!-- BUILD:ZAPASY -->
+<div class="card"><h2>Холодильник</h2><table><tr><th>Продукт</th><th>Количество</th></tr><tr><td>Протеиновый йогурт</td><td><span class="badge ok">✅ 3 шт</span></td></tr><tr><td>Йогурт חלבון 23г</td><td><span class="badge ok">✅ 2 шт</span></td></tr><tr><td>Коттедж 3%</td><td><span class="badge ok">✅ 1.5 банки</span></td></tr><tr><td>Творог</td><td><span class="badge ok">✅ 2 × 500 г</span></td></tr><tr><td>Гбина йом йом 5%</td><td><span class="badge ok">✅ 4 шт</span></td></tr><tr><td>Яйца M</td><td><span class="badge ok">✅ 20 шт</span></td></tr><tr><td>Моцарелла тёртая</td><td><span class="badge ok">✅ 200 г</span></td></tr><tr><td>Масло сливочное</td><td><span class="badge ok">✅ 2 пачки по 200 г</span></td></tr><tr><td>Свёкла варёная в вакууме</td><td><span class="badge ok">✅ 500 г</span></td></tr><tr><td>Тофу</td><td><span class="badge ok">✅ 300 г</span></td></tr><tr><td>Кинза свежая</td><td><span class="badge ok">✅ 1 пучок</span></td></tr><tr><td>Пастерма צלויה</td><td><span class="badge ok">✅ ~330 г</span></td></tr></table></div>
+<div class="card"><h2>Овощи / фрукты</h2><table><tr><th>Продукт</th><th>Количество</th></tr><tr><td>Батат крупный</td><td><span class="badge ok">✅ 2 шт</span></td></tr><tr><td>Морковка</td><td><span class="badge ok">✅ 500 г + 3 кг</span></td></tr><tr><td>Лук</td><td><span class="badge ok">✅ 2 шт</span></td></tr><tr><td>Чеснок</td><td><span class="badge ok">✅ 4 головки</span></td></tr><tr><td>Баклажаны</td><td><span class="badge ok">✅ 3 шт</span></td></tr><tr><td>Красный перец</td><td><span class="badge ok">✅ 3 шт</span></td></tr><tr><td>Капуста</td><td><span class="badge ok">✅ 1 кочан</span></td></tr><tr><td>Кольраби</td><td><span class="badge ok">✅ 2 шт</span></td></tr></table></div>
+<div class="card"><h2>Мясо</h2><table><tr><th>Продукт</th><th>Количество</th></tr><tr><td>Говяжий фарш</td><td><span class="badge ok">✅ 2.258 кг</span></td></tr></table></div>
+<div class="card"><h2>Консервы / сухое</h2><table><tr><th>Продукт</th><th>Количество</th></tr><tr><td>Тунец</td><td><span class="badge ok">✅ 4 банки по 160 г</span></td></tr><tr><td>Маринованные огурцы</td><td><span class="badge ok">✅ 1 банка</span></td></tr><tr><td>Белая фасоль сухая</td><td><span class="badge ok">✅ 500 г</span></td></tr><tr><td>Хумус консервированный</td><td><span class="badge ok">✅ 560 г</span></td></tr><tr><td>Рис басмати</td><td><span class="badge ok">✅ 1 кг</span></td></tr><tr><td>Красная чечевица</td><td><span class="badge ok">✅ 700 г</span></td></tr><tr><td>Манка</td><td><span class="badge ok">✅ 500 г</span></td></tr><tr><td>Овсянка</td><td><span class="badge ok">✅ 500 г</span></td></tr><tr><td>Арахисовый порошок</td><td><span class="badge ok">✅ 200 г</span></td></tr></table></div>
+<div class="card"><h2>Хлеб / выпечка</h2><table><tr><th>Продукт</th><th>Количество</th></tr><tr><td>Питы 500г</td><td><span class="badge ok">✅ 3 уп</span></td></tr><tr><td>Сушёные абрикосы б/к</td><td><span class="badge ok">✅ 346 г</span></td></tr></table></div>
+<div class="card"><h2>Последние изменения</h2><table><tr><th>Дата</th><th>Продукт</th><th>Действие</th><th>Количество</th></tr><tr><td>2026-03-19</td><td>Абрикосы сушёные б/к</td><td>закупка</td><td>346 г</td></tr><tr><td>2026-03-19</td><td>Пастерма</td><td>закупка</td><td>330 г</td></tr><tr><td>2026-03-19</td><td>Питы 500г</td><td>закупка</td><td>3 уп</td></tr><tr><td>2026-03-19</td><td>Гбина йом йом 5%</td><td>закупка</td><td>4 шт</td></tr><tr><td>2026-03-19</td><td>Яйца M</td><td>закупка</td><td>12 шт</td></tr></table></div>
 <!-- /BUILD:ZAPASY -->
-</div>
+    </section>
 
-<!-- МОРОЗИЛКА -->
-<div id="morozilka" class="tab">
-<!-- BUILD:MOROZILKA -->
-<div class="card">
-<h2>Готовые блюда</h2>
-<p style="color:#aaa; font-size:14px; padding:8px 0;">Пока пусто — заполни после первой готовки!</p>
-</div>
-<div class="card">
-<h2>Что хорошо замораживается</h2>
+    <section id="morozilka" class="tab">
+      <!-- BUILD:MOROZILKA -->
+<div class="card"><h2>Готовые блюда</h2><p class="empty-state">Пока ничего не заморожено.</p></div>
+<div class="card"><h2>Памятка</h2>
 <div class="freeze-good">✅ Мясные шарики (сырые или готовые)</div>
 <div class="freeze-good">✅ Куриная печень с луком</div>
 <div class="freeze-good">✅ Лосось в томатном рагу</div>
@@ -194,27 +379,22 @@
 <div class="freeze-good">✅ Заливной пирог (порциями)</div>
 <div class="freeze-good">✅ Маффины из теста панкейков</div>
 <br>
+<div class="freeze-bad">Добавила в заморозку → записать блюдо, количество порций, дату</div>
+<div class="freeze-bad">Достала → вычеркнуть или уменьшить количество</div>
+<div class="freeze-bad">Срок хранения в морозилке: мясо/рыба — до 3 месяцев, супы/рагу — до 2 месяцев</div>
 <div class="freeze-bad">❌ Панкейки (становятся резиновыми)</div>
 <div class="freeze-bad">❌ Свежие салаты</div>
 <div class="freeze-bad">❌ Картошка в готовых блюдах (меняет текстуру)</div>
 </div>
 <!-- /BUILD:MOROZILKA -->
-</div>
+    </section>
 
-<!-- РЕЦЕПТЫ -->
-<div id="recepty" class="tab">
-<!-- BUILD:RECEPTY -->
+    <section id="recepty" class="tab">
+      <!-- BUILD:RECEPTY -->
 <div class="card">
-<h2>Рецепты — нажми чтобы открыть</h2>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r1')">
-    <div>
-      <div class="recipe-title">🥧 Заливной пирог с грибами и коттеджем</div>
-      <div class="recipe-time">~1 час</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r1">›</div>
-  </div>
-  <div class="recipe-body" id="r1">
+<h2>Рецепты</h2>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="1" aria-expanded="false" aria-controls="recipe-1"><span class="recipe-heading"><span class="recipe-title">🥧 Заливной пирог с грибами и коттеджем</span><span class="recipe-time">~1 час</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-1" data-recipe-body="1" hidden><p><strong>Время:</strong> ~1 час</p>
+<p><strong>Урок:</strong> запеканка без муки в тесте разваливается — нужен заливной пирог!</p>
 <h4>Начинка</h4>
 <ul>
 <li>грибы — 300–400 г</li>
@@ -246,18 +426,9 @@
 <li>Просто запеканка (грибы + йогурт + коттедж) = разваливается даже с яйцом</li>
 <li>Нужна именно заливка с мукой чтобы держало форму</li>
 <li>Дать остыть перед нарезкой — обязательно</li>
-</ul>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r2')">
-    <div>
-      <div class="recipe-title">🍰 Запеканка / маффины из теста для панкейков</div>
-      <div class="recipe-time">~5 мин подготовка + 25–30 мин духовка</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r2">›</div>
-  </div>
-  <div class="recipe-body" id="r2">
+</ul></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="2" aria-expanded="false" aria-controls="recipe-2"><span class="recipe-heading"><span class="recipe-title">🥞 Запеканка / маффины из теста для панкейков</span><span class="recipe-time">~5 мин подготовка + 25–30 мин духовка</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-2" data-recipe-body="2" hidden><p><strong>Вариант для тех, кто не хочет стоять у плиты</strong></p>
+<p><strong>Время:</strong> ~5 мин подготовка + 25–30 мин духовка</p>
 <h4>Тесто (то же самое что для панкейков)</h4>
 <ul>
 <li>йогурт — 250 г (или коттедж)</li>
@@ -289,18 +460,10 @@
 <li>Не нужно стоять у плиты и переворачивать</li>
 <li>Залил — поставил — забыл</li>
 <li>Порционные маффины удобны ребёнку</li>
-</ul>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r3')">
-    <div>
-      <div class="recipe-title">🥦 Запечённые овощи с кинзой</div>
-      <div class="recipe-time">~40 мин · ✅ в заморозку</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r3">›</div>
-  </div>
-  <div class="recipe-body" id="r3">
+</ul></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="3" aria-expanded="false" aria-controls="recipe-3"><span class="recipe-heading"><span class="recipe-title">🥕 Запечённые овощи с кинзой</span><span class="recipe-time">~40 мин</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-3" data-recipe-body="3" hidden><p><strong>Время:</strong> ~40 мин</p>
+<p><strong>Подходит для заморозки:</strong> ✅</p>
+<p><strong>Некодовые проекты:</strong> универсальный гарнир или самостоятельное блюдо</p>
 <h4>Ингредиенты (базовые)</h4>
 <ul>
 <li>любые овощи: баклажаны, кабачки, болгарский перец, помидоры, лук, морковь, чеснок</li>
@@ -331,18 +494,9 @@
 <li>Пюрировать с кинзой, чесноком (1 зубчик), оливковым маслом, солью</li>
 <li>По желанию: капля мёда или заменителя для баланса</li>
 <li>Подавать на тёплый лосось</li>
-</ul>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r4')">
-    <div>
-      <div class="recipe-title">🫀 Куриная печень с луком</div>
-      <div class="recipe-time">~20 мин · ✅ в заморозку</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r4">›</div>
-  </div>
-  <div class="recipe-body" id="r4">
+</ul></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="4" aria-expanded="false" aria-controls="recipe-4"><span class="recipe-heading"><span class="recipe-title">🫕 Куриная печень с луком</span><span class="recipe-time">~20 мин</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-4" data-recipe-body="4" hidden><p><strong>Время:</strong> ~20 мин</p>
+<p><strong>Подходит для заморозки:</strong> ✅</p>
 <h4>Ингредиенты</h4>
 <ul>
 <li>куриная печень — 500 г</li>
@@ -360,23 +514,14 @@
 <li>Соль — только в конце!</li>
 </ol>
 <h4>Для нежной текстуры</h4>
-<p style="font-size:13px; color:#555; margin:4px 0;">Замочить печень в молоке на 30 минут перед жаркой — вытянет горечь и смягчит.</p>
+<p>Замочить печень в молоке на 30 минут перед жаркой — вытянет горечь и смягчит.</p>
 <h4>Идеи подачи</h4>
 <ul>
 <li>Просто с гарниром</li>
 <li>Пробить блендером с луком + капля масла или йогурта → паштет для намазки (Талю тоже можно)</li>
-</ul>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r5')">
-    <div>
-      <div class="recipe-title">🍗 Куриное филе в аэрогриле</div>
-      <div class="recipe-time">✅ в заморозку</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r5">›</div>
-  </div>
-  <div class="recipe-body" id="r5">
+</ul></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="5" aria-expanded="false" aria-controls="recipe-5"><span class="recipe-heading"><span class="recipe-title">🍗 Куриное филе в аэрогриле</span><span class="recipe-time">205°C</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-5" data-recipe-body="5" hidden><p><strong>Температура:</strong> 205°C</p>
+<p><strong>Подходит для заморозки:</strong> ✅</p>
 <h4>Время приготовления</h4>
 <ul>
 <li>Целым куском — 16–20 минут</li>
@@ -399,20 +544,11 @@
 <ul>
 <li>оливковое масло + чеснок + соль + перец + лимонный сок</li>
 <li>мариновать 15–30 минут</li>
-</ul>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r6')">
-    <div>
-      <div class="recipe-title">🐟 Лосось в духовке</div>
-      <div class="recipe-time">~35–45 мин · ✅ в заморозку</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r6">›</div>
-  </div>
-  <div class="recipe-body" id="r6">
+</ul></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="6" aria-expanded="false" aria-controls="recipe-6"><span class="recipe-heading"><span class="recipe-title">🐟 Лосось в духовке</span><span class="recipe-time">~35–45 мин</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-6" data-recipe-body="6" hidden><p><strong>Время:</strong> ~35–45 мин</p>
+<p><strong>Подходит для заморозки:</strong> ✅ (остатки использовать в салат / намазку / омлет)</p>
 <h4>Вариант 1 — С овощами на одном противне (просто)</h4>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>Ингредиенты:</b></p>
+<p><strong>Ингредиенты:</strong></p>
 <ul>
 <li>лосось — порциями</li>
 <li>картошка, морковь — дольками</li>
@@ -421,14 +557,14 @@
 <li>масло, соль, перец</li>
 <li>по желанию: немного сливок в конце, лимон</li>
 </ul>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>Приготовление:</b></p>
+<p><strong>Приготовление:</strong></p>
 <ol>
 <li>Овощи на противень, масло, соль — запекать 200°C, 20 минут</li>
 <li>Добавить лосось сверху + масло + специи</li>
 <li>Вернуть в духовку ещё на 15–20 минут</li>
 </ol>
 <h4>Вариант 2 — В сливочном соусе с фасолью</h4>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>Ингредиенты:</b></p>
+<p><strong>Ингредиенты:</strong></p>
 <ul>
 <li>лосось — кубиками</li>
 <li>лук, чеснок, болгарский перец</li>
@@ -436,7 +572,7 @@
 <li>замороженная зелёная фасоль и горошек — горсть</li>
 <li>сливочное масло</li>
 </ul>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>Приготовление:</b></p>
+<p><strong>Приготовление:</strong></p>
 <ol>
 <li>Лосось обжарить на сливочном масле, отложить</li>
 <li>В той же сковороде: лук, чеснок, перец</li>
@@ -444,7 +580,7 @@
 <li>Вернуть лосось, потушить ещё 5 мин</li>
 </ol>
 <h4>Вариант 3 — Томатное рагу с овощами</h4>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>Ингредиенты:</b></p>
+<p><strong>Ингредиенты:</strong></p>
 <ul>
 <li>лосось — крупными кубиками</li>
 <li>помидоры — 2–3 шт или консервированные</li>
@@ -453,7 +589,7 @@
 <li>паприка, зира, соль, перец</li>
 <li>по желанию: бальзамик, коттедж или сливки в конце</li>
 </ul>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>Приготовление:</b></p>
+<p><strong>Приготовление:</strong></p>
 <ol>
 <li>Лук, морковь, перец обжарить до мягкости</li>
 <li>Добавить чеснок и помидоры, тушить 10–15 мин до соуса</li>
@@ -467,18 +603,10 @@
 <li>Намазка в питу: размять вилкой + коттедж + огурец + зелень</li>
 <li>Омлет с лососем и зеленью</li>
 <li>Мини-котлетки: лосось + яйцо + мука + обжарить</li>
-</ul>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r7')">
-    <div>
-      <div class="recipe-title">🍖 Мясные шарики в духовке</div>
-      <div class="recipe-time">~20 мин подготовка + 25 мин духовка · ✅ в заморозку</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r7">›</div>
-  </div>
-  <div class="recipe-body" id="r7">
+</ul></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="7" aria-expanded="false" aria-controls="recipe-7"><span class="recipe-heading"><span class="recipe-title">🍖 Мясные шарики в духовке</span><span class="recipe-time">(что меняла, что понравилось)</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-7" data-recipe-body="7" hidden><p><strong>Время:</strong> ~20 мин подготовка + 25 мин духовка</p>
+<p><strong>Порций:</strong> ~20 шариков (семья на 2 раза + часть в заморозку)</p>
+<p><strong>Подходит для заморозки:</strong> ✅</p>
 <h4>Ингредиенты</h4>
 <ul>
 <li>фарш (свинина+говядина) — 700 г</li>
@@ -503,23 +631,15 @@
 <li>С рисом и овощами</li>
 </ul>
 <h4>Заморозка</h4>
-<p style="font-size:13px; color:#555; margin:4px 0;">Заморозить можно:</p>
+<p>Заморозить можно:</p>
 <ul>
-<li><b>Сырыми</b> — слепить, заморозить на доске, потом ссыпать в пакет</li>
-<li><b>Готовыми</b> — остудить, разложить по порциям</li>
+<li><strong>Сырыми</strong> — слепить, заморозить на доске, потом ссыпать в пакет</li>
+<li><strong>Готовыми</strong> — остудить, разложить по порциям</li>
 </ul>
-<h4>Заметки</h4>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r8')">
-    <div>
-      <div class="recipe-title">🥞 Панкейки на йогурте</div>
-      <div class="recipe-time">~30 мин (с ребёнком) · ✅ в заморозку · ✅ Проверено</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r8">›</div>
-  </div>
-  <div class="recipe-body" id="r8">
+<h4>Заметки</h4></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="8" aria-expanded="false" aria-controls="recipe-8"><span class="recipe-heading"><span class="recipe-title">🥞 Панкейки на йогурте ✅ Проверено</span><span class="recipe-time">~30 мин (с ребёнком)</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-8" data-recipe-body="8" hidden><p><strong>Время:</strong> ~30 мин (с ребёнком)</p>
+<p><strong>Порций:</strong> ~12-15 штук</p>
+<p><strong>Подходит для заморозки:</strong> ✅</p>
 <h4>Ингредиенты</h4>
 <ul>
 <li>йогурт натуральный — 250 г (или 200 г — тогда муки 130 г)</li>
@@ -530,42 +650,34 @@
 <li>соль — щепотка</li>
 <li>корица / ваниль — по желанию</li>
 </ul>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>С яблоками:</b> добавить 1 яблоко, натёртое на крупной тёрке</p>
+<p><strong>С яблоками:</strong> добавить 1 яблоко, натёртое на крупной тёрке</p>
 <h4>Приготовление</h4>
 <ol>
 <li>Смешать йогурт, яйцо, сахар, соль</li>
 <li>Добавить муку с разрыхлителем, перемешать до однородности</li>
 <li>Тесто — как густая сметана (если жидковато — добавить ложку муки)</li>
 <li>Если с яблоком — вмешать в конце</li>
-<li>Жарить на <b>среднем огне</b> под крышкой, 2–3 мин с каждой стороны</li>
+<li>Жарить на <strong>среднем огне</strong> под крышкой, 2–3 мин с каждой стороны</li>
 <li>Переворачивать когда поверхность стала матовой и появились пузырьки</li>
 </ol>
 <h4>Важные уроки</h4>
 <ul>
-<li>"Средний огонь" — это дольше, чем кажется, зато не горят</li>
+<li>&quot;Средний огонь&quot; — это дольше, чем кажется, зато не горят</li>
 <li>Под крышкой — гарантированно пропекаются внутри</li>
 <li>Маленький размер (7–9 см) = быстрее и равномернее</li>
 </ul>
 <h4>Вариант в духовке</h4>
-<p style="font-size:13px; color:#555; margin:4px 0;">Тесто то же самое:</p>
+<p>Тесто то же самое:</p>
 <ul>
 <li>Форму 20–22 см смазать маслом</li>
 <li>Вылить тесто, можно сверху кусочки фруктов</li>
 <li>180°C, 25–30 минут</li>
 <li>Проверить шпажкой</li>
 </ul>
-<p style="font-size:13px; color:#555; margin:4px 0;">Или в формочках для маффинов — 20–25 минут.</p>
-  </div>
-</div>
-<div class="recipe-item">
-  <div class="recipe-header" onclick="toggleRecipe('r9')">
-    <div>
-      <div class="recipe-title">🥞 Панкейки на коттедже</div>
-      <div class="recipe-time">~30 мин · ✅ Проверено</div>
-    </div>
-    <div class="recipe-arrow" id="arr-r9">›</div>
-  </div>
-  <div class="recipe-body" id="r9">
+<p>Или в формочках для маффинов — 20–25 минут.</p></div></article>
+<article class="recipe-item"><button class="recipe-header" type="button" data-recipe-trigger="9" aria-expanded="false" aria-controls="recipe-9"><span class="recipe-heading"><span class="recipe-title">🥞 Панкейки на коттедже ✅ Проверено</span><span class="recipe-time">~30 мин</span></span><span class="recipe-arrow" aria-hidden="true">›</span></button><div class="recipe-body" id="recipe-9" data-recipe-body="9" hidden><p><strong>Время:</strong> ~30 мин</p>
+<p><strong>Порций:</strong> ~12 штук</p>
+<p><strong>Больше белка, чем на йогурте</strong></p>
 <h4>Ингредиенты</h4>
 <ul>
 <li>коттедж — 250 г</li>
@@ -576,7 +688,7 @@
 <li>соль — щепотка</li>
 <li>корица / ваниль — по желанию</li>
 </ul>
-<p style="font-size:13px; color:#555; margin:4px 0;"><b>С яблоками:</b> добавить 1 яблоко, натёртое на тёрке</p>
+<p><strong>С яблоками:</strong> добавить 1 яблоко, натёртое на тёрке</p>
 <h4>Приготовление</h4>
 <ol>
 <li>Коттедж можно пробить блендером (для гладкой текстуры) или размять вилкой (для текстурных)</li>
@@ -588,46 +700,111 @@
 <ul>
 <li>Огонь тот же — средний, он кажется медленным, но так и надо</li>
 <li>Переворачивать когда низ румяный, а верх схватился</li>
-</ul>
-  </div>
-</div>
-</div>
-<div class="card">
-<h2>Подсказки</h2>
-<table>
-  <tr><td>🍬 Сахарозаменитель</td><td>в 10 раз слаще — брать в 10 раз меньше</td></tr>
-  <tr><td>🌡️ Аэрогриль</td><td>205°C, 12–16 мин</td></tr>
-  <tr><td>🥞 Панкейки</td><td>переворачивать когда верх матовый + пузырьки</td></tr>
-  <tr><td>🧂 Печень</td><td>солить только в конце!</td></tr>
-</table>
+</ul></div></article>
 </div>
 <!-- /BUILD:RECEPTY -->
-</div>
+    </section>
+  </div>
 
-<script>
-  function showTab(id, btn) {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
-  }
+  <script>
+    const storageKeys = {
+      activeTab: "menu.activeTab",
+      shopping: "menu.shoppingChecks",
+      recipes: "menu.recipeOpen",
+    };
 
-  function toggleRecipe(id) {
-    const body = document.getElementById(id);
-    const arr = document.getElementById('arr-' + id);
-    body.classList.toggle('open');
-    arr.classList.toggle('open');
-  }
+    function readStorage(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
 
-  function toggleItem(id) {
-    document.getElementById(id).classList.toggle('checked');
-  }
+    function writeStorage(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
 
-  function clearAll() {
-    document.querySelectorAll('.shop-item input').forEach(cb => cb.checked = false);
-    document.querySelectorAll('.shop-item').forEach(item => item.classList.remove('checked'));
-  }
-</script>
+    function showTab(id) {
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.classList.toggle("active", tab.id === id);
+      });
+      document.querySelectorAll("[data-tab-trigger]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.tabTrigger === id);
+      });
+      writeStorage(storageKeys.activeTab, id);
+    }
 
+    function applyShoppingState() {
+      const checked = new Set(readStorage(storageKeys.shopping, []));
+      document.querySelectorAll("[data-shop-checkbox]").forEach((input) => {
+        const key = input.dataset.shopCheckbox;
+        const isChecked = checked.has(key);
+        input.checked = isChecked;
+        input.closest(".shop-item")?.classList.toggle("checked", isChecked);
+      });
+    }
+
+    function saveShoppingState() {
+      const checked = Array.from(document.querySelectorAll("[data-shop-checkbox]:checked"))
+        .map((input) => input.dataset.shopCheckbox);
+      writeStorage(storageKeys.shopping, checked);
+    }
+
+    function setRecipeState(id, expanded) {
+      const trigger = document.querySelector(`[data-recipe-trigger="${id}"]`);
+      const body = document.querySelector(`[data-recipe-body="${id}"]`);
+      if (!trigger || !body) return;
+      trigger.setAttribute("aria-expanded", String(expanded));
+      body.hidden = !expanded;
+    }
+
+    function applyRecipeState() {
+      const openIds = new Set(readStorage(storageKeys.recipes, []));
+      document.querySelectorAll("[data-recipe-trigger]").forEach((trigger) => {
+        const id = trigger.dataset.recipeTrigger;
+        setRecipeState(id, openIds.has(id));
+      });
+    }
+
+    function saveRecipeState() {
+      const openIds = Array.from(document.querySelectorAll('[data-recipe-trigger][aria-expanded="true"]'))
+        .map((button) => button.dataset.recipeTrigger);
+      writeStorage(storageKeys.recipes, openIds);
+    }
+
+    document.querySelectorAll("[data-tab-trigger]").forEach((button) => {
+      button.addEventListener("click", () => showTab(button.dataset.tabTrigger));
+    });
+
+    document.addEventListener("change", (event) => {
+      const input = event.target;
+      if (!(input instanceof HTMLInputElement) || !input.matches("[data-shop-checkbox]")) return;
+      input.closest(".shop-item")?.classList.toggle("checked", input.checked);
+      saveShoppingState();
+    });
+
+    document.querySelectorAll("[data-recipe-trigger]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const id = button.dataset.recipeTrigger;
+        const expanded = button.getAttribute("aria-expanded") !== "true";
+        setRecipeState(id, expanded);
+        saveRecipeState();
+      });
+    });
+
+    document.getElementById("clear-shopping")?.addEventListener("click", () => {
+      document.querySelectorAll("[data-shop-checkbox]").forEach((input) => {
+        input.checked = false;
+        input.closest(".shop-item")?.classList.remove("checked");
+      });
+      writeStorage(storageKeys.shopping, []);
+    });
+
+    showTab(readStorage(storageKeys.activeTab, "plan"));
+    applyShoppingState();
+    applyRecipeState();
+  </script>
 </body>
 </html>
