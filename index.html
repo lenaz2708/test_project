@@ -71,346 +71,537 @@
 
 <!-- ПЛАН -->
 <div id="plan" class="tab active">
-  <div class="tip">3 готовки в неделю · ~1–1.5 часа каждая · часть сразу в заморозку</div>
-  <div class="plan-block">
-    <h3>🟠 Готовка 1 (воскресенье)</h3>
-    <p>Пока не заполнено</p>
-  </div>
-  <div class="plan-block">
-    <h3>🟠 Готовка 2 (вторник)</h3>
-    <p>Пока не заполнено</p>
-  </div>
-  <div class="plan-block">
-    <h3>🟠 Готовка 3 (четверг)</h3>
-    <p>Пока не заполнено</p>
-  </div>
+<!-- BUILD:PLAN -->
+<div class="tip">3 готовки в неделю · ~1–1.5 часа каждая · часть сразу в заморозку</div>
+<div class="plan-block">
+<h3>🟠 Готовка 1 (например, воскресенье)</h3>
+<p>Пока не заполнено</p>
+<p style="font-size:12px; color:#777; margin-top:3px;"><b>В холодильник:</b> (на 2-3 дня)</p>
+</div>
+<div class="plan-block">
+<h3>🟠 Готовка 2 (например, вторник)</h3>
+<p>Пока не заполнено</p>
+</div>
+<div class="plan-block">
+<h3>🟠 Готовка 3 (например, четверг)</h3>
+<p>Пока не заполнено</p>
+</div>
+<!-- /BUILD:PLAN -->
 </div>
 
 <!-- СПИСОК ПОКУПОК -->
 <div id="shop" class="tab">
-  <div class="card">
-    <h2>Список покупок</h2>
-    <div class="shop-section">Мясо / рыба</div>
-    <div class="shop-item" id="si1"><input type="checkbox" id="c1" onchange="toggleItem('si1')"><label for="c1"></label></div>
-
-    <div class="shop-section">Молочное / яйца</div>
-    <div class="shop-item" id="si2"><input type="checkbox" id="c2" onchange="toggleItem('si2')"><label for="c2"></label></div>
-
-    <div class="shop-section">Овощи / фрукты</div>
-    <div class="shop-item" id="si3"><input type="checkbox" id="c3" onchange="toggleItem('si3')"><label for="c3"></label></div>
-
-    <div class="shop-section">Крупы / бобовые</div>
-    <div class="shop-item" id="si4"><input type="checkbox" id="c4" onchange="toggleItem('si4')"><label for="c4"></label></div>
-
-    <div class="shop-section">Консервы / разное</div>
-    <div class="shop-item" id="si5"><input type="checkbox" id="c5" onchange="toggleItem('si5')"><label for="c5"></label></div>
-
-    <button class="clear-btn" onclick="clearAll()">✓ Очистить список</button>
-    <p style="font-size:12px; color:#aaa; margin-top:8px; text-align:center;">Список заполняется вместе с планом</p>
-  </div>
+<!-- BUILD:SHOP -->
+<div class="card">
+<h2>Список покупок</h2>
+<div class="shop-section">Мясо / рыба</div>
+<div class="shop-section">Овощи / фрукты</div>
+<div class="shop-section">Молочное / яйца</div>
+<div class="shop-section">Крупы / макароны / бобовые</div>
+<div class="shop-section">Консервы / соусы</div>
+<div class="shop-section">Заморозка (готовая)</div>
+<div class="shop-section">Разное</div>
+<div class="shop-section">Что закончилось дома (докупить)</div>
+<p style="color:#aaa; font-size:13px; padding:8px 0;">Список пуст — составляется вместе с планом</p>
+<button class="clear-btn" onclick="clearAll()">✓ Очистить список</button>
+</div>
+<!-- /BUILD:SHOP -->
 </div>
 
 <!-- ЗАПАСЫ -->
 <div id="zapasy" class="tab">
-  <div class="card">
-    <h2>Холодильник</h2>
-    <table>
-      <tr><th>Продукт</th><th>Количество</th></tr>
-      <tr><td>Протеиновый йогурт</td><td><span class="badge ok">3 шт</span></td></tr>
-      <tr><td>Коттедж 3%</td><td><span class="badge ok">1.5 банки</span></td></tr>
-      <tr><td>Творог</td><td><span class="badge ok">2 × 500 г</span></td></tr>
-      <tr><td>Яйца крупные</td><td><span class="badge ok">20 шт</span></td></tr>
-      <tr><td>Моцарелла тёртая</td><td><span class="badge ok">200 г</span></td></tr>
-      <tr><td>Масло сливочное</td><td><span class="badge ok">2 пачки</span></td></tr>
-      <tr><td>Свёкла варёная</td><td><span class="badge ok">500 г</span></td></tr>
-      <tr><td>Тофу</td><td><span class="badge ok">300 г</span></td></tr>
-      <tr><td>Кинза свежая</td><td><span class="badge ok">1 пучок</span></td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h2>Овощи / фрукты</h2>
-    <table>
-      <tr><th>Продукт</th><th>Количество</th></tr>
-      <tr><td>Батат крупный</td><td><span class="badge ok">2 шт</span></td></tr>
-      <tr><td>Морковь</td><td><span class="badge ok">3.5 кг</span></td></tr>
-      <tr><td>Лук</td><td><span class="badge ok">2 шт</span></td></tr>
-      <tr><td>Чеснок</td><td><span class="badge ok">4 головки</span></td></tr>
-      <tr><td>Баклажаны</td><td><span class="badge ok">3 шт</span></td></tr>
-      <tr><td>Красный перец</td><td><span class="badge ok">3 шт</span></td></tr>
-      <tr><td>Капуста</td><td><span class="badge ok">1 кочан</span></td></tr>
-      <tr><td>Кольраби</td><td><span class="badge ok">2 шт</span></td></tr>
-    </table>
-  </div>
-  <div class="card">
-    <h2>Консервы / сухое</h2>
-    <table>
-      <tr><th>Продукт</th><th>Количество</th></tr>
-      <tr><td>Тунец</td><td><span class="badge ok">4 банки</span></td></tr>
-      <tr><td>Хумус</td><td><span class="badge ok">560 г</span></td></tr>
-      <tr><td>Рис басмати</td><td><span class="badge ok">1 кг</span></td></tr>
-      <tr><td>Красная чечевица</td><td><span class="badge ok">700 г</span></td></tr>
-      <tr><td>Белая фасоль сухая</td><td><span class="badge ok">500 г</span></td></tr>
-      <tr><td>Манка</td><td><span class="badge ok">500 г</span></td></tr>
-      <tr><td>Овсянка</td><td><span class="badge ok">500 г</span></td></tr>
-      <tr><td>Арахисовый порошок</td><td><span class="badge ok">200 г</span></td></tr>
-    </table>
-    <p class="updated">Обновлено: 15 марта 2026</p>
-  </div>
+<!-- BUILD:ZAPASY -->
+<div class="card">
+<h2>Холодильник</h2>
+<table>
+<tr><th>Продукт</th><th>Количество</th></tr>
+<tr><td>Протеиновый йогурт</td><td><span class="badge ok">3 шт</span></td></tr>
+<tr><td>Йогурт חלבון 23г</td><td><span class="badge ok">2 шт</span></td></tr>
+<tr><td>Коттедж 3%</td><td><span class="badge ok">1.5 банки</span></td></tr>
+<tr><td>Творог</td><td><span class="badge ok">2 × 500 г</span></td></tr>
+<tr><td>Гбина йом йом 5%</td><td><span class="badge ok">4 шт</span></td></tr>
+<tr><td>Яйца M</td><td><span class="badge ok">20 шт</span></td></tr>
+<tr><td>Моцарелла тёртая</td><td><span class="badge ok">200 г</span></td></tr>
+<tr><td>Масло сливочное</td><td><span class="badge ok">2 пачки по 200 г</span></td></tr>
+<tr><td>Свёкла варёная в вакууме</td><td><span class="badge ok">500 г</span></td></tr>
+<tr><td>Тофу</td><td><span class="badge ok">300 г</span></td></tr>
+<tr><td>Кинза свежая</td><td><span class="badge ok">1 пучок</span></td></tr>
+<tr><td>Пастерма צלויה</td><td><span class="badge ok">~330 г</span></td></tr>
+</table>
+</div>
+<div class="card">
+<h2>Овощи / фрукты</h2>
+<table>
+<tr><th>Продукт</th><th>Количество</th></tr>
+<tr><td>Батат крупный</td><td><span class="badge ok">2 шт</span></td></tr>
+<tr><td>Морковка</td><td><span class="badge ok">500 г + 3 кг</span></td></tr>
+<tr><td>Лук</td><td><span class="badge ok">2 шт</span></td></tr>
+<tr><td>Чеснок</td><td><span class="badge ok">4 головки</span></td></tr>
+<tr><td>Баклажаны</td><td><span class="badge ok">3 шт</span></td></tr>
+<tr><td>Красный перец</td><td><span class="badge ok">3 шт</span></td></tr>
+<tr><td>Капуста</td><td><span class="badge ok">1 кочан</span></td></tr>
+<tr><td>Кольраби</td><td><span class="badge ok">2 шт</span></td></tr>
+</table>
+</div>
+<div class="card">
+<h2>Мясо</h2>
+<table>
+<tr><th>Продукт</th><th>Количество</th></tr>
+<tr><td>Говяжий фарш</td><td><span class="badge ok">2.258 кг</span></td></tr>
+</table>
+</div>
+<div class="card">
+<h2>Консервы / сухое</h2>
+<table>
+<tr><th>Продукт</th><th>Количество</th></tr>
+<tr><td>Тунец</td><td><span class="badge ok">4 банки по 160 г</span></td></tr>
+<tr><td>Маринованные огурцы</td><td><span class="badge ok">1 банка</span></td></tr>
+<tr><td>Белая фасоль сухая</td><td><span class="badge ok">500 г</span></td></tr>
+<tr><td>Хумус консервированный</td><td><span class="badge ok">560 г</span></td></tr>
+<tr><td>Рис басмати</td><td><span class="badge ok">1 кг</span></td></tr>
+<tr><td>Красная чечевица</td><td><span class="badge ok">700 г</span></td></tr>
+<tr><td>Манка</td><td><span class="badge ok">500 г</span></td></tr>
+<tr><td>Овсянка</td><td><span class="badge ok">500 г</span></td></tr>
+<tr><td>Арахисовый порошок</td><td><span class="badge ok">200 г</span></td></tr>
+</table>
+</div>
+<div class="card">
+<h2>Хлеб / выпечка</h2>
+<table>
+<tr><th>Продукт</th><th>Количество</th></tr>
+<tr><td>Питы 500г</td><td><span class="badge ok">3 уп</span></td></tr>
+<tr><td>Сушёные абрикосы б/к</td><td><span class="badge ok">346 г</span></td></tr>
+</table>
+</div>
+<p class="updated">Обновлено: 19 марта 2026 (без учёта морозилки)</p>
+<!-- /BUILD:ZAPASY -->
 </div>
 
 <!-- МОРОЗИЛКА -->
 <div id="morozilka" class="tab">
-  <div class="card">
-    <h2>Готовые блюда</h2>
-    <p style="color:#aaa; font-size:14px; padding:8px 0;">Пока пусто — заполни после первой готовки!</p>
-  </div>
-  <div class="card">
-    <h2>Что хорошо замораживается</h2>
-    <div class="freeze-good">✅ Мясные шарики (сырые или готовые)</div>
-    <div class="freeze-good">✅ Куриная печень с луком</div>
-    <div class="freeze-good">✅ Лосось в томатном рагу</div>
-    <div class="freeze-good">✅ Запечённые овощи</div>
-    <div class="freeze-good">✅ Куриное филе (сырое)</div>
-    <div class="freeze-good">✅ Заливной пирог (порциями)</div>
-    <div class="freeze-good">✅ Маффины из теста панкейков</div>
-    <br>
-    <div class="freeze-bad">❌ Панкейки (становятся резиновыми)</div>
-    <div class="freeze-bad">❌ Свежие салаты</div>
-    <div class="freeze-bad">❌ Картошка в готовых блюдах</div>
-  </div>
+<!-- BUILD:MOROZILKA -->
+<div class="card">
+<h2>Готовые блюда</h2>
+<p style="color:#aaa; font-size:14px; padding:8px 0;">Пока пусто — заполни после первой готовки!</p>
+</div>
+<div class="card">
+<h2>Что хорошо замораживается</h2>
+<div class="freeze-good">✅ Мясные шарики (сырые или готовые)</div>
+<div class="freeze-good">✅ Куриная печень с луком</div>
+<div class="freeze-good">✅ Лосось в томатном рагу</div>
+<div class="freeze-good">✅ Запечённые овощи</div>
+<div class="freeze-good">✅ Куриное филе (сырое)</div>
+<div class="freeze-good">✅ Заливной пирог (порциями)</div>
+<div class="freeze-good">✅ Маффины из теста панкейков</div>
+<br>
+<div class="freeze-bad">❌ Панкейки (становятся резиновыми)</div>
+<div class="freeze-bad">❌ Свежие салаты</div>
+<div class="freeze-bad">❌ Картошка в готовых блюдах (меняет текстуру)</div>
+</div>
+<!-- /BUILD:MOROZILKA -->
 </div>
 
 <!-- РЕЦЕПТЫ -->
 <div id="recepty" class="tab">
-  <div class="card">
-    <h2>Рецепты — нажми чтобы открыть</h2>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r1')">
-        <div><div class="recipe-title">🥞 Панкейки на йогурте</div><div class="recipe-time">~30 мин · ✅ Проверено</div></div>
-        <div class="recipe-arrow" id="arr-r1">›</div>
-      </div>
-      <div class="recipe-body" id="r1">
-        <h4>Ингредиенты</h4>
-        <ul>
-          <li>Йогурт — 250 г (или 200 г, тогда муки 130 г)</li>
-          <li>Яйцо — 1 шт</li>
-          <li>Мука — 150–160 г (≈ 7 ст.л. с горкой)</li>
-          <li>Разрыхлитель — 1 ч.л.</li>
-          <li>Сахарозаменитель — 1–2 ч.л. (в 10 раз слаще сахара!)</li>
-          <li>Соль — щепотка</li>
-          <li>Корица / ваниль — по желанию</li>
-          <li><b>+ яблоко на тёрке</b> — по желанию</li>
-        </ul>
-        <h4>Приготовление</h4>
-        <ol>
-          <li>Смешать йогурт, яйцо, сахар, соль</li>
-          <li>Добавить муку с разрыхлителем — тесто как густая сметана</li>
-          <li>Если с яблоком — вмешать в конце</li>
-          <li>Жарить на среднем огне под крышкой, 2–3 мин с каждой стороны</li>
-          <li>Переворачивать когда верх матовый и появились пузырьки</li>
-        </ol>
-        <div class="warn">💡 В духовке: форма 20–22 см, 180°C, 25–30 мин. Или маффины — 20–25 мин.</div>
-      </div>
+<!-- BUILD:RECEPTY -->
+<div class="card">
+<h2>Рецепты — нажми чтобы открыть</h2>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r1')">
+    <div>
+      <div class="recipe-title">🥧 Заливной пирог с грибами и коттеджем</div>
+      <div class="recipe-time">~1 час</div>
     </div>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r2')">
-        <div><div class="recipe-title">🥞 Панкейки на коттедже</div><div class="recipe-time">~30 мин · больше белка · ✅ Проверено</div></div>
-        <div class="recipe-arrow" id="arr-r2">›</div>
-      </div>
-      <div class="recipe-body" id="r2">
-        <h4>Ингредиенты</h4>
-        <ul>
-          <li>Коттедж — 250 г</li>
-          <li>Яйца — 2 шт</li>
-          <li>Мука — 3 ст.л. с горкой (50–60 г)</li>
-          <li>Разрыхлитель — 0.5–1 ч.л.</li>
-          <li>Сахарозаменитель — по вкусу</li>
-          <li>Соль — щепотка</li>
-          <li><b>+ яблоко на тёрке</b> — по желанию</li>
-        </ul>
-        <h4>Приготовление</h4>
-        <ol>
-          <li>Коттедж размять вилкой (или блендером — для гладкой текстуры)</li>
-          <li>Смешать с яйцами, сахаром, солью</li>
-          <li>Добавить муку с разрыхлителем — тесто густое</li>
-          <li>Жарить на среднем огне, 2–3 мин с каждой стороны, под крышкой</li>
-        </ol>
-      </div>
-    </div>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r3')">
-        <div><div class="recipe-title">🍖 Мясные шарики в духовке</div><div class="recipe-time">~45 мин · ✅ в заморозку</div></div>
-        <div class="recipe-arrow" id="arr-r3">›</div>
-      </div>
-      <div class="recipe-body" id="r3">
-        <h4>Ингредиенты (~20 шариков)</h4>
-        <ul>
-          <li>Фарш — 700 г</li>
-          <li>Яйцо — 1 шт</li>
-          <li>Лук — 1 шт</li>
-          <li>Чеснок — 2 зубчика</li>
-          <li>Соль, перец</li>
-          <li>Панировочные сухари — 3 ст.л. (по желанию)</li>
-        </ul>
-        <h4>Приготовление</h4>
-        <ol>
-          <li>Лук и чеснок натереть или мелко нарезать</li>
-          <li>Смешать всё с фаршем, посолить, поперчить</li>
-          <li>Слепить шарики размером с мячик для гольфа</li>
-          <li>Выложить на противень с пергаментом</li>
-          <li>Духовка 200°C — 22–25 минут</li>
-        </ol>
-        <div class="warn">❄️ Заморозка: сырыми (заморозить на доске, потом в пакет) или готовыми (остудить, разложить по порциям)</div>
-      </div>
-    </div>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r4')">
-        <div><div class="recipe-title">🍗 Куриное филе в аэрогриле</div><div class="recipe-time">12–20 мин · 205°C</div></div>
-        <div class="recipe-arrow" id="arr-r4">›</div>
-      </div>
-      <div class="recipe-body" id="r4">
-        <h4>Время</h4>
-        <ul>
-          <li>Целым куском — 16–20 мин</li>
-          <li>Нарезанное — 10–14 мин</li>
-          <li>Тонкое — от 12 мин (проверено!)</li>
-        </ul>
-        <h4>Готовность</h4>
-        <ul>
-          <li>Внутри нет розового, сок прозрачный</li>
-        </ul>
-        <h4>Простой маринад</h4>
-        <ul>
-          <li>Оливковое масло + чеснок + соль + перец + лимон</li>
-          <li>Мариновать 15–30 минут</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r5')">
-        <div><div class="recipe-title">🫀 Куриная печень с луком</div><div class="recipe-time">~20 мин · ✅ в заморозку</div></div>
-        <div class="recipe-arrow" id="arr-r5">›</div>
-      </div>
-      <div class="recipe-body" id="r5">
-        <h4>Ингредиенты</h4>
-        <ul>
-          <li>Куриная печень — 500 г</li>
-          <li>Лук — 1–2 шт</li>
-          <li>Масло для жарки</li>
-          <li>Соль, перец — <b>только в конце!</b></li>
-          <li>По желанию: тимьян, паприка, бальзамик</li>
-        </ul>
-        <h4>Приготовление</h4>
-        <ol>
-          <li>Промыть, обрезать протоки и зелёные пятна</li>
-          <li>Обжарить лук до золотистости</li>
-          <li>Добавить печень на сильный огонь</li>
-          <li>Жарить 7–10 мин, помешивая</li>
-          <li>Соль — только в конце!</li>
-        </ol>
-        <div class="warn">💡 Для нежности: замочить в молоке на 30 мин. Для паштета: пробить блендером с каплей масла или йогурта.</div>
-      </div>
-    </div>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r6')">
-        <div><div class="recipe-title">🐟 Лосось в духовке</div><div class="recipe-time">~40 мин · 3 варианта</div></div>
-        <div class="recipe-arrow" id="arr-r6">›</div>
-      </div>
-      <div class="recipe-body" id="r6">
-        <h4>Вариант 1 — с овощами на противне</h4>
-        <ol>
-          <li>Овощи (картошка, морковь, перец, лук) на противень, масло, соль → 200°C, 20 мин</li>
-          <li>Добавить лосось сверху → ещё 15–20 мин</li>
-        </ol>
-        <h4>Вариант 2 — в сливочном соусе</h4>
-        <ol>
-          <li>Обжарить лосось кубиками, отложить</li>
-          <li>Лук + перец + чеснок обжарить</li>
-          <li>Влить сливки/йогурт, добавить фасоль и горошек, 5 мин</li>
-          <li>Вернуть лосось, ещё 5 мин</li>
-        </ol>
-        <h4>Вариант 3 — томатное рагу</h4>
-        <ol>
-          <li>Обжарить лук, морковь, перец</li>
-          <li>Добавить помидоры → тушить 10–15 мин до соуса</li>
-          <li>Добавить фасоль и горошек</li>
-          <li>Выложить сырой лосось в соус, накрыть крышкой → 10–12 мин</li>
-        </ol>
-      </div>
-    </div>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r7')">
-        <div><div class="recipe-title">🥦 Запечённые овощи с кинзой</div><div class="recipe-time">~40 мин · ✅ в заморозку</div></div>
-        <div class="recipe-arrow" id="arr-r7">›</div>
-      </div>
-      <div class="recipe-body" id="r7">
-        <h4>Ингредиенты</h4>
-        <ul>
-          <li>Любые овощи: баклажан, кабачок, перец, помидоры, лук, морковь</li>
-          <li>Оливковое масло, соль, перец</li>
-          <li>Кинза — добавить после запекания</li>
-        </ul>
-        <h4>Приготовление</h4>
-        <ol>
-          <li>Нарезать кубиками ~2–3 см</li>
-          <li>На противень, полить маслом, посолить, перемешать</li>
-          <li>200°C, 30–40 мин до румяности</li>
-          <li>Пересыпать в миску, добавить кинзу, дать настояться 10 мин</li>
-        </ol>
-      </div>
-    </div>
-
-    <div class="recipe-item">
-      <div class="recipe-header" onclick="toggleRecipe('r8')">
-        <div><div class="recipe-title">🥧 Заливной пирог с грибами</div><div class="recipe-time">~1 час</div></div>
-        <div class="recipe-arrow" id="arr-r8">›</div>
-      </div>
-      <div class="recipe-body" id="r8">
-        <h4>Начинка</h4>
-        <ul>
-          <li>Грибы — 300–400 г</li>
-          <li>Лук — 1–2 шт, чеснок — 1–2 зубчика</li>
-          <li>Коттедж — 200–250 г</li>
-          <li>Соль, перец, мускатный орех</li>
-        </ul>
-        <h4>Тесто</h4>
-        <ul>
-          <li>Йогурт — 200 г</li>
-          <li>Яйца — 2 шт</li>
-          <li>Мука — 130–150 г</li>
-          <li>Разрыхлитель — 1 ч.л., соль — 0.5 ч.л.</li>
-          <li>Масло растительное — 3 ст.л.</li>
-        </ul>
-        <h4>Приготовление</h4>
-        <ol>
-          <li>Грибы и лук обжарить, остудить, смешать с коттеджем</li>
-          <li>Смешать тесто</li>
-          <li>Форма: половина теста → начинка → остальное тесто</li>
-          <li>180°C, 35–40 мин</li>
-          <li>Дать постоять 10–15 мин перед нарезкой!</li>
-        </ol>
-        <div class="warn">⚠️ Просто запеканка (без муки в тесте) — разваливается. Нужна именно заливка!</div>
-      </div>
-    </div>
-
+    <div class="recipe-arrow" id="arr-r1">›</div>
   </div>
-
-  <div class="card">
-    <h2>Подсказки</h2>
-    <table>
-      <tr><td>🍬 Сахарозаменитель</td><td>в 10 раз слаще — брать в 10 раз меньше</td></tr>
-      <tr><td>🌡️ Аэрогриль</td><td>205°C, 12–16 мин</td></tr>
-      <tr><td>🥞 Панкейки</td><td>переворачивать когда верх матовый + пузырьки</td></tr>
-      <tr><td>🧂 Печень</td><td>солить только в конце!</td></tr>
-    </table>
+  <div class="recipe-body" id="r1">
+<h4>Начинка</h4>
+<ul>
+<li>грибы — 300–400 г</li>
+<li>лук — 1–2 шт</li>
+<li>чеснок — 1–2 зубчика</li>
+<li>коттедж — 200–250 г</li>
+<li>соль, перец, по желанию мускатный орех</li>
+</ul>
+<h4>Тесто (заливка)</h4>
+<ul>
+<li>йогурт или кефир — 200 г</li>
+<li>яйца — 2 шт</li>
+<li>мука — 130–150 г (≈ 1 стакан)</li>
+<li>разрыхлитель — 1 ч.л.</li>
+<li>соль — 0.5 ч.л.</li>
+<li>масло растительное — 3 ст.л.</li>
+</ul>
+<h4>Приготовление</h4>
+<ol>
+<li>Грибы и лук обжарить до выпаривания жидкости, добавить чеснок</li>
+<li>Остудить, смешать с коттеджем</li>
+<li>Смешать все ингредиенты теста</li>
+<li>В смазанную форму: половина теста → начинка → остальное тесто</li>
+<li>180°C, 35–40 минут</li>
+<li>Дать постоять 10–15 мин перед нарезкой</li>
+</ol>
+<h4>Важные уроки</h4>
+<ul>
+<li>Просто запеканка (грибы + йогурт + коттедж) = разваливается даже с яйцом</li>
+<li>Нужна именно заливка с мукой чтобы держало форму</li>
+<li>Дать остыть перед нарезкой — обязательно</li>
+</ul>
   </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r2')">
+    <div>
+      <div class="recipe-title">🍰 Запеканка / маффины из теста для панкейков</div>
+      <div class="recipe-time">~5 мин подготовка + 25–30 мин духовка</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r2">›</div>
+  </div>
+  <div class="recipe-body" id="r2">
+<h4>Тесто (то же самое что для панкейков)</h4>
+<ul>
+<li>йогурт — 250 г (или коттедж)</li>
+<li>яйца — 2 шт</li>
+<li>мука — 150–160 г</li>
+<li>разрыхлитель — 1 ч.л.</li>
+<li>сахар / заменитель — по вкусу</li>
+<li>соль — щепотка</li>
+<li>ваниль или корица</li>
+</ul>
+<h4>Вариант А — Большая запеканка</h4>
+<ol>
+<li>Форму 20–22 см смазать маслом</li>
+<li>Вылить тесто (слой 2–3 см)</li>
+<li>Сверху — кусочки яблок, банана, ягоды — что есть</li>
+<li>180°C, 25–30 минут</li>
+<li>Проверить шпажкой — должна выходить сухой</li>
+<li>Нарезать квадратиками — удобно есть руками (Талю тоже)</li>
+</ol>
+<h4>Вариант Б — Мини-маффины</h4>
+<ol>
+<li>Разлить тесто по формочкам для маффинов (на ⅔)</li>
+<li>Внутрь можно бросить ягоду, кусочек банана или яблока</li>
+<li>180°C, 20–25 минут</li>
+<li>Хранятся 2–3 дня — удобно для перекусов</li>
+</ol>
+<h4>Плюсы</h4>
+<ul>
+<li>Не нужно стоять у плиты и переворачивать</li>
+<li>Залил — поставил — забыл</li>
+<li>Порционные маффины удобны ребёнку</li>
+</ul>
+  </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r3')">
+    <div>
+      <div class="recipe-title">🥦 Запечённые овощи с кинзой</div>
+      <div class="recipe-time">~40 мин · ✅ в заморозку</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r3">›</div>
+  </div>
+  <div class="recipe-body" id="r3">
+<h4>Ингредиенты (базовые)</h4>
+<ul>
+<li>любые овощи: баклажаны, кабачки, болгарский перец, помидоры, лук, морковь, чеснок</li>
+<li>оливковое масло</li>
+<li>соль, перец</li>
+<li>кинза — добавить после запекания</li>
+<li>по желанию: паприка, зира, лимонный сок или уксус</li>
+</ul>
+<h4>Приготовление</h4>
+<ol>
+<li>Нарезать все овощи крупными кубиками (~2–3 см)</li>
+<li>Выложить на противень, полить маслом, посолить, поперчить, перемешать прямо на противне</li>
+<li>Запекать при 200°C, 30–40 минут — до румяности и мягкости</li>
+<li>Пересыпать в миску, добавить мелко нарезанную кинзу</li>
+<li>По желанию: лимонный сок или уксус</li>
+<li>Дать настояться 10 минут</li>
+</ol>
+<h4>Идеи подачи</h4>
+<ul>
+<li>Как гарнир к рыбе или мясу</li>
+<li>Холодная закуска</li>
+<li>Основа для питы</li>
+<li>Соус к каше</li>
+</ul>
+<h4>Соус из кислых абрикосов и кинзы (к лососю)</h4>
+<ul>
+<li>Кислые абрикосы (2–3 шт) — припустить 1–2 мин или использовать сырые</li>
+<li>Пюрировать с кинзой, чесноком (1 зубчик), оливковым маслом, солью</li>
+<li>По желанию: капля мёда или заменителя для баланса</li>
+<li>Подавать на тёплый лосось</li>
+</ul>
+  </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r4')">
+    <div>
+      <div class="recipe-title">🫀 Куриная печень с луком</div>
+      <div class="recipe-time">~20 мин · ✅ в заморозку</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r4">›</div>
+  </div>
+  <div class="recipe-body" id="r4">
+<h4>Ингредиенты</h4>
+<ul>
+<li>куриная печень — 500 г</li>
+<li>лук — 1–2 шт</li>
+<li>масло — для жарки</li>
+<li>соль, перец — в самом конце (иначе будет жёсткой!)</li>
+<li>по желанию: тимьян, паприка, чеснок, капля бальзамика или соевого соуса</li>
+</ul>
+<h4>Приготовление</h4>
+<ol>
+<li>Промыть печень, обрезать всё лишнее (желчные протоки, зелёные пятна)</li>
+<li>Лук нарезать и обжарить до золотистости</li>
+<li>Добавить печень — на сильный огонь, чтобы запечаталась</li>
+<li>Жарить помешивая 7–10 минут (внутри не должно быть розового)</li>
+<li>Соль — только в конце!</li>
+</ol>
+<h4>Для нежной текстуры</h4>
+<p style="font-size:13px; color:#555; margin:4px 0;">Замочить печень в молоке на 30 минут перед жаркой — вытянет горечь и смягчит.</p>
+<h4>Идеи подачи</h4>
+<ul>
+<li>Просто с гарниром</li>
+<li>Пробить блендером с луком + капля масла или йогурта → паштет для намазки (Талю тоже можно)</li>
+</ul>
+  </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r5')">
+    <div>
+      <div class="recipe-title">🍗 Куриное филе в аэрогриле</div>
+      <div class="recipe-time">✅ в заморозку</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r5">›</div>
+  </div>
+  <div class="recipe-body" id="r5">
+<h4>Время приготовления</h4>
+<ul>
+<li>Целым куском — 16–20 минут</li>
+<li>Нарезанное (кубики, полоски) — 10–14 минут</li>
+<li>Тонкое филе — от 12 минут (проверено!)</li>
+</ul>
+<h4>Готовность</h4>
+<ul>
+<li>Внутри нет розового</li>
+<li>Сок прозрачный</li>
+<li>Термометр (если есть): от 72°C внутри</li>
+</ul>
+<h4>Чтобы не пересохло</h4>
+<ul>
+<li>Смазать маслом перед приготовлением</li>
+<li>Замариновать заранее (даже 15 минут помогают)</li>
+<li>Или накрыть фольгой в начале, потом открыть</li>
+</ul>
+<h4>Простой маринад</h4>
+<ul>
+<li>оливковое масло + чеснок + соль + перец + лимонный сок</li>
+<li>мариновать 15–30 минут</li>
+</ul>
+  </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r6')">
+    <div>
+      <div class="recipe-title">🐟 Лосось в духовке</div>
+      <div class="recipe-time">~35–45 мин · ✅ в заморозку</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r6">›</div>
+  </div>
+  <div class="recipe-body" id="r6">
+<h4>Вариант 1 — С овощами на одном противне (просто)</h4>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>Ингредиенты:</b></p>
+<ul>
+<li>лосось — порциями</li>
+<li>картошка, морковь — дольками</li>
+<li>болгарский перец, лук — крупно</li>
+<li>чеснок — целыми зубчиками</li>
+<li>масло, соль, перец</li>
+<li>по желанию: немного сливок в конце, лимон</li>
+</ul>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>Приготовление:</b></p>
+<ol>
+<li>Овощи на противень, масло, соль — запекать 200°C, 20 минут</li>
+<li>Добавить лосось сверху + масло + специи</li>
+<li>Вернуть в духовку ещё на 15–20 минут</li>
+</ol>
+<h4>Вариант 2 — В сливочном соусе с фасолью</h4>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>Ингредиенты:</b></p>
+<ul>
+<li>лосось — кубиками</li>
+<li>лук, чеснок, болгарский перец</li>
+<li>сливки — 100–150 мл (или йогурт)</li>
+<li>замороженная зелёная фасоль и горошек — горсть</li>
+<li>сливочное масло</li>
+</ul>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>Приготовление:</b></p>
+<ol>
+<li>Лосось обжарить на сливочном масле, отложить</li>
+<li>В той же сковороде: лук, чеснок, перец</li>
+<li>Влить сливки/йогурт, добавить фасоль и горошек, тушить 5 мин</li>
+<li>Вернуть лосось, потушить ещё 5 мин</li>
+</ol>
+<h4>Вариант 3 — Томатное рагу с овощами</h4>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>Ингредиенты:</b></p>
+<ul>
+<li>лосось — крупными кубиками</li>
+<li>помидоры — 2–3 шт или консервированные</li>
+<li>перец, лук, морковь, чеснок</li>
+<li>замороженная фасоль, горошек</li>
+<li>паприка, зира, соль, перец</li>
+<li>по желанию: бальзамик, коттедж или сливки в конце</li>
+</ul>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>Приготовление:</b></p>
+<ol>
+<li>Лук, морковь, перец обжарить до мягкости</li>
+<li>Добавить чеснок и помидоры, тушить 10–15 мин до соуса</li>
+<li>Добавить фасоль и горошек</li>
+<li>Выложить кусочки сырого лосося в соус, слегка утопить</li>
+<li>Накрыть крышкой, тушить на низком огне 10–12 мин</li>
+</ol>
+<h4>Что делать с остатками (200 г)</h4>
+<ul>
+<li>Салат: лосось + овощи + йогуртовая заправка (йогурт + горчица + лимон)</li>
+<li>Намазка в питу: размять вилкой + коттедж + огурец + зелень</li>
+<li>Омлет с лососем и зеленью</li>
+<li>Мини-котлетки: лосось + яйцо + мука + обжарить</li>
+</ul>
+  </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r7')">
+    <div>
+      <div class="recipe-title">🍖 Мясные шарики в духовке</div>
+      <div class="recipe-time">~20 мин подготовка + 25 мин духовка · ✅ в заморозку</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r7">›</div>
+  </div>
+  <div class="recipe-body" id="r7">
+<h4>Ингредиенты</h4>
+<ul>
+<li>фарш (свинина+говядина) — 700 г</li>
+<li>яйцо — 1 шт</li>
+<li>лук — 1 шт</li>
+<li>чеснок — 2 зубчика</li>
+<li>соль, перец</li>
+<li>панировочные сухари — 3 ст.л. (по желанию)</li>
+</ul>
+<h4>Приготовление</h4>
+<ol>
+<li>Лук и чеснок натереть или мелко нарезать</li>
+<li>Смешать всё с фаршем, посолить, поперчить</li>
+<li>Слепить шарики размером с мячик для гольфа</li>
+<li>Выложить на противень с пергаментом</li>
+<li>Духовка 200°C — 22-25 минут</li>
+</ol>
+<h4>Подача</h4>
+<ul>
+<li>С макаронами и соусом</li>
+<li>С картошкой пюре</li>
+<li>С рисом и овощами</li>
+</ul>
+<h4>Заморозка</h4>
+<p style="font-size:13px; color:#555; margin:4px 0;">Заморозить можно:</p>
+<ul>
+<li><b>Сырыми</b> — слепить, заморозить на доске, потом ссыпать в пакет</li>
+<li><b>Готовыми</b> — остудить, разложить по порциям</li>
+</ul>
+<h4>Заметки</h4>
+  </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r8')">
+    <div>
+      <div class="recipe-title">🥞 Панкейки на йогурте</div>
+      <div class="recipe-time">~30 мин (с ребёнком) · ✅ в заморозку · ✅ Проверено</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r8">›</div>
+  </div>
+  <div class="recipe-body" id="r8">
+<h4>Ингредиенты</h4>
+<ul>
+<li>йогурт натуральный — 250 г (или 200 г — тогда муки 130 г)</li>
+<li>яйцо — 1 шт</li>
+<li>мука — 150–160 г (≈ 7 столовых ложек с горкой)</li>
+<li>разрыхлитель — 1 ч.л.</li>
+<li>сахар — 1–2 ст.л. (или сукралоза-эритрит: 1–2 ч.л., смесь в 10 раз слаще)</li>
+<li>соль — щепотка</li>
+<li>корица / ваниль — по желанию</li>
+</ul>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>С яблоками:</b> добавить 1 яблоко, натёртое на крупной тёрке</p>
+<h4>Приготовление</h4>
+<ol>
+<li>Смешать йогурт, яйцо, сахар, соль</li>
+<li>Добавить муку с разрыхлителем, перемешать до однородности</li>
+<li>Тесто — как густая сметана (если жидковато — добавить ложку муки)</li>
+<li>Если с яблоком — вмешать в конце</li>
+<li>Жарить на <b>среднем огне</b> под крышкой, 2–3 мин с каждой стороны</li>
+<li>Переворачивать когда поверхность стала матовой и появились пузырьки</li>
+</ol>
+<h4>Важные уроки</h4>
+<ul>
+<li>"Средний огонь" — это дольше, чем кажется, зато не горят</li>
+<li>Под крышкой — гарантированно пропекаются внутри</li>
+<li>Маленький размер (7–9 см) = быстрее и равномернее</li>
+</ul>
+<h4>Вариант в духовке</h4>
+<p style="font-size:13px; color:#555; margin:4px 0;">Тесто то же самое:</p>
+<ul>
+<li>Форму 20–22 см смазать маслом</li>
+<li>Вылить тесто, можно сверху кусочки фруктов</li>
+<li>180°C, 25–30 минут</li>
+<li>Проверить шпажкой</li>
+</ul>
+<p style="font-size:13px; color:#555; margin:4px 0;">Или в формочках для маффинов — 20–25 минут.</p>
+  </div>
+</div>
+<div class="recipe-item">
+  <div class="recipe-header" onclick="toggleRecipe('r9')">
+    <div>
+      <div class="recipe-title">🥞 Панкейки на коттедже</div>
+      <div class="recipe-time">~30 мин · ✅ Проверено</div>
+    </div>
+    <div class="recipe-arrow" id="arr-r9">›</div>
+  </div>
+  <div class="recipe-body" id="r9">
+<h4>Ингредиенты</h4>
+<ul>
+<li>коттедж — 250 г</li>
+<li>яйца — 2 шт</li>
+<li>мука — 3 ст.л. с горкой (≈ 50–60 г)</li>
+<li>разрыхлитель — 0.5–1 ч.л.</li>
+<li>сахар — 1–2 ч.л. (или сукралоза-эритрит: 1/5 от этого)</li>
+<li>соль — щепотка</li>
+<li>корица / ваниль — по желанию</li>
+</ul>
+<p style="font-size:13px; color:#555; margin:4px 0;"><b>С яблоками:</b> добавить 1 яблоко, натёртое на тёрке</p>
+<h4>Приготовление</h4>
+<ol>
+<li>Коттедж можно пробить блендером (для гладкой текстуры) или размять вилкой (для текстурных)</li>
+<li>Смешать с яйцами, сахаром, солью</li>
+<li>Добавить муку с разрыхлителем — тесто густое, лепёшкообразное</li>
+<li>Жарить на среднем огне, 2–3 мин с каждой стороны, под крышкой</li>
+</ol>
+<h4>Важные уроки</h4>
+<ul>
+<li>Огонь тот же — средний, он кажется медленным, но так и надо</li>
+<li>Переворачивать когда низ румяный, а верх схватился</li>
+</ul>
+  </div>
+</div>
+</div>
+<div class="card">
+<h2>Подсказки</h2>
+<table>
+  <tr><td>🍬 Сахарозаменитель</td><td>в 10 раз слаще — брать в 10 раз меньше</td></tr>
+  <tr><td>🌡️ Аэрогриль</td><td>205°C, 12–16 мин</td></tr>
+  <tr><td>🥞 Панкейки</td><td>переворачивать когда верх матовый + пузырьки</td></tr>
+  <tr><td>🧂 Печень</td><td>солить только в конце!</td></tr>
+</table>
+</div>
+<!-- /BUILD:RECEPTY -->
 </div>
 
 <script>
