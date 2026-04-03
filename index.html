@@ -3,330 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Меню и запасы</title>
+  <title>Моя кухня</title>
   <style>
-    :root {
-      --bg: #eef7f3;
-      --surface: #ffffff;
-      --surface-soft: #f7fbf8;
-      --line: #d7e6df;
-      --text: #23322c;
-      --muted: #667670;
-      --accent: #2a9d8f;
-      --accent-deep: #1f6d64;
-      --warn-bg: #fff1de;
-      --warn-text: #9b5a00;
-      --good: #2b8a57;
-      --bad: #bb5d00;
-      --shadow: 0 10px 30px rgba(36, 70, 58, 0.08);
-    }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Tahoma, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(42, 157, 143, 0.16), transparent 32%),
-        linear-gradient(180deg, #f4fbf8 0%, var(--bg) 100%);
-      color: var(--text);
-    }
-    .page {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 24px 16px 40px;
-    }
-    header {
-      background: linear-gradient(135deg, #2a9d8f, #24796f);
-      color: #fff;
-      padding: 24px 20px;
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-    }
-    header h1 {
-      margin: 0;
-      font-size: clamp(28px, 4vw, 38px);
-      line-height: 1.1;
-    }
-    header p {
-      margin: 10px 0 0;
-      color: rgba(255, 255, 255, 0.86);
-      max-width: 56ch;
-    }
-    nav {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 10px;
-      margin: 18px 0 22px;
-    }
-    nav button {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.75);
-      color: var(--muted);
-      cursor: pointer;
-      padding: 12px 10px;
-      font: inherit;
-      font-weight: 600;
-      transition: 0.2s ease;
-      backdrop-filter: blur(8px);
-    }
-    nav button:hover,
-    nav button:focus-visible {
-      color: var(--accent-deep);
-      border-color: rgba(42, 157, 143, 0.45);
-      transform: translateY(-1px);
-      outline: none;
-    }
-    nav button.active {
-      background: var(--surface);
-      color: var(--accent-deep);
-      border-color: transparent;
-      box-shadow: var(--shadow);
-    }
-    .tab {
-      display: none;
-      animation: fade-in 0.2s ease;
-    }
-    .tab.active {
-      display: block;
-    }
-    .card,
-    .plan-block {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(215, 230, 223, 0.8);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-    }
-    .card {
-      padding: 18px;
-      margin-bottom: 14px;
-    }
-    .card h2 {
-      margin: 0 0 14px;
-      font-size: 16px;
-      color: var(--accent-deep);
-    }
-    .tip {
-      background: linear-gradient(135deg, rgba(42, 157, 143, 0.16), rgba(42, 157, 143, 0.08));
-      border: 1px solid rgba(42, 157, 143, 0.16);
-      border-radius: 18px;
-      padding: 14px 16px;
-      color: var(--accent-deep);
-      margin-bottom: 14px;
-    }
-    .plan-block {
-      padding: 16px;
-      margin-bottom: 12px;
-      border-left: 5px solid var(--accent);
-    }
-    .plan-block h3 {
-      margin: 0 0 8px;
-      font-size: 15px;
-    }
-    .plan-block p,
-    .plan-block li,
-    .plan-note {
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .plan-block ul {
-      margin: 8px 0 0 18px;
-      padding: 0;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-    }
-    th, td {
-      text-align: left;
-      padding: 10px 8px;
-      border-bottom: 1px solid #edf3f0;
-      vertical-align: top;
-    }
-    th {
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: #80918a;
-    }
-    .badge {
-      display: inline-block;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .badge.ok {
-      background: rgba(43, 138, 87, 0.14);
-      color: var(--good);
-    }
-    .badge.low {
-      background: rgba(187, 93, 0, 0.15);
-      color: var(--bad);
-    }
-    .shop-section {
-      margin-top: 12px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent);
-      font-weight: 700;
-    }
-    .shop-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid #eef4f1;
-      cursor: pointer;
-    }
-    .shop-item input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent);
-      flex: 0 0 auto;
-    }
-    .shop-item span {
-      transition: 0.2s ease;
-    }
-    .shop-item.checked span {
-      color: #9aa9a3;
-      text-decoration: line-through;
-    }
-    .clear-btn {
-      width: 100%;
-      margin-top: 14px;
-      border: none;
-      border-radius: 14px;
-      background: var(--accent);
-      color: #fff;
-      cursor: pointer;
-      font: inherit;
-      font-weight: 700;
-      padding: 12px 14px;
-    }
-    .clear-btn:hover,
-    .clear-btn:focus-visible {
-      background: var(--accent-deep);
-      outline: none;
-    }
-    .recipe-item + .recipe-item {
-      border-top: 1px solid #eef4f1;
-    }
-    .recipe-header {
-      width: 100%;
-      border: none;
-      background: transparent;
-      padding: 14px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      text-align: left;
-      cursor: pointer;
-      color: inherit;
-      font: inherit;
-    }
-    .recipe-heading {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 0;
-    }
-    .recipe-title {
-      font-size: 15px;
-      font-weight: 700;
-    }
-    .recipe-time {
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .recipe-arrow {
-      font-size: 24px;
-      color: var(--accent);
-      transition: transform 0.2s ease;
-    }
-    .recipe-header[aria-expanded="true"] .recipe-arrow {
-      transform: rotate(90deg);
-    }
-    .recipe-body {
-      background: var(--surface-soft);
-      border-radius: 16px;
-      padding: 14px;
-      margin-bottom: 12px;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-    .recipe-body h4 {
-      margin: 10px 0 6px;
-      color: var(--accent-deep);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .recipe-body p,
-    .recipe-body li {
-      margin: 0 0 6px;
-    }
-    .recipe-body ul,
-    .recipe-body ol {
-      margin: 0 0 8px 18px;
-      padding: 0;
-    }
-    .recipe-body .warn {
-      background: var(--warn-bg);
-      color: var(--warn-text);
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
-    .freeze-good,
-    .freeze-bad {
-      padding: 5px 0;
-      font-size: 14px;
-    }
-    .freeze-good { color: var(--good); }
-    .freeze-bad { color: var(--bad); }
-    .empty-state {
-      color: var(--muted);
-      margin: 8px 0 0;
-    }
-    code {
-      background: rgba(35, 50, 44, 0.06);
-      padding: 0 4px;
-      border-radius: 6px;
-    }
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (max-width: 640px) {
-      .page {
-        padding: 16px 12px 32px;
-      }
-      header {
-        border-radius: 18px;
-      }
-      .card,
-      .plan-block {
-        border-radius: 16px;
-      }
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f9f8; color: #333; }
+    .page { padding: 0; }
+    header { background: #2a9d8f; color: white; padding: 20px; text-align: center; }
+    header h1 { font-size: 24px; font-weight: 700; }
+    header p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+    nav { display: flex; background: white; border-bottom: 2px solid #2a9d8f; overflow-x: auto; }
+    nav button { flex: 1; min-width: 70px; padding: 12px 6px; border: none; background: none; cursor: pointer; font-size: 12px; color: #666; }
+    nav button.active { color: #2a9d8f; border-bottom: 3px solid #2a9d8f; font-weight: 600; margin-bottom: -2px; }
+    .tab { display: none; padding: 14px; }
+    .tab.active { display: block; }
+    .card { background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .card h2 { font-size: 15px; color: #2a9d8f; margin-bottom: 12px; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    td, th { padding: 8px 6px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+    th { font-weight: 600; color: #888; font-size: 11px; text-transform: uppercase; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 12px; }
+    .badge.ok { background: #e0f5f3; color: #2a9d8f; }
+    .badge.low { background: #fff3e0; color: #e65100; }
+    .plan-block { background: #e0f5f3; border-left: 4px solid #2a9d8f; padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 10px; }
+    .plan-block h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .plan-block p, .plan-block li, .plan-note { font-size: 13px; color: #555; }
+    .plan-block ul { margin: 6px 0 0 18px; padding: 0; }
+    .tip { background: #e0f5f3; padding: 12px; border-radius: 8px; font-size: 13px; color: #2a6b62; margin-bottom: 12px; }
+    .updated { font-size: 11px; color: #aaa; text-align: right; margin-top: 8px; }
+    .freeze-good { color: #2e7d32; font-size: 13px; padding: 3px 0; }
+    .freeze-bad { color: #c62828; font-size: 13px; padding: 3px 0; }
+    .recipe-item + .recipe-item { border-top: 1px solid #f0f0f0; }
+    .recipe-header { width: 100%; border: none; background: transparent; padding: 12px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; cursor: pointer; color: inherit; font: inherit; }
+    .recipe-heading { display: flex; flex-direction: column; gap: 2px; }
+    .recipe-title { font-size: 14px; font-weight: 500; }
+    .recipe-time { font-size: 11px; color: #aaa; }
+    .recipe-arrow { color: #2a9d8f; font-size: 18px; transition: transform 0.2s; }
+    .recipe-header[aria-expanded="true"] .recipe-arrow { transform: rotate(90deg); }
+    .recipe-body { background: #f9fefe; border-radius: 8px; padding: 12px; margin-bottom: 10px; font-size: 13px; line-height: 1.6; }
+    .recipe-body[hidden] { display: none; }
+    .recipe-body h4 { font-size: 12px; color: #2a9d8f; text-transform: uppercase; margin: 10px 0 4px; }
+    .recipe-body p, .recipe-body li { margin-bottom: 4px; }
+    .recipe-body ul, .recipe-body ol { padding-left: 16px; }
+    .recipe-body .warn { background: #fff8e1; padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 12px; color: #666; }
+    .shop-section { font-size: 11px; color: #2a9d8f; text-transform: uppercase; font-weight: 700; padding: 10px 0 4px; }
+    .shop-item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f5f5f5; font-size: 14px; cursor: pointer; }
+    .shop-item input { width: 18px; height: 18px; accent-color: #2a9d8f; flex: 0 0 auto; }
+    .shop-item.checked span { text-decoration: line-through; color: #bbb; }
+    .clear-btn { background: #2a9d8f; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer; width: 100%; margin-top: 12px; }
+    .empty-state { color: #aaa; font-size: 14px; padding: 8px 0; }
   </style>
 </head>
 <body>
   <div class="page">
     <header>
-      <h1>Меню и запасы</h1>
-      <p>Личный food hub: план недели, покупки, запасы, морозилка и рецепты в одном месте.</p>
+      <h1>🍳 Моя кухня</h1>
+      <p>Лена · семья 3 человека · 3 готовки в неделю</p>
     </header>
 
     <nav>
-      <button class="active" type="button" data-tab-trigger="plan">План</button>
-      <button type="button" data-tab-trigger="shop">Покупки</button>
-      <button type="button" data-tab-trigger="zapasy">Запасы</button>
-      <button type="button" data-tab-trigger="morozilka">Морозилка</button>
-      <button type="button" data-tab-trigger="recepty">Рецепты</button>
+      <button class="active" type="button" data-tab-trigger="plan">📅 План</button>
+      <button type="button" data-tab-trigger="shop">🛒 Покупки</button>
+      <button type="button" data-tab-trigger="zapasy">📦 Запасы</button>
+      <button type="button" data-tab-trigger="morozilka">❄️ Морозилка</button>
+      <button type="button" data-tab-trigger="recepty">👩‍🍳 Рецепты</button>
     </nav>
 
     <section id="plan" class="tab active">
